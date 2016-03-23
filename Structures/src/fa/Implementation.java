@@ -32,8 +32,10 @@ public class Implementation implements Runnable{
 	public void run(){
 		Scanner input = new Scanner(System.in);
 		boolean running = true;
-		System.out.println("L1 = { x ε {0,1}* | x has even length}");
-		System.out.println("L2 = { x ε {0,1}* | x ends with 11 }");
+		System.out.println("-----------------------------------------------");
+		System.out.println("DFA Machine");
+		System.out.println("L1 = { x e {0,1}* | x has even length}");
+		System.out.println("L2 = { x e {0,1}* | x ends with 11 }");
 		DFAMachine machine = new DFAMachine();
 		one = machine.genL1();
 		two = machine.genL2();
@@ -55,7 +57,7 @@ public class Implementation implements Runnable{
 
 		this.input = input;
 		System.out.println("-----------------------------------------------");
-		System.out.println("Testing Input : " + input);
+		System.out.println("Testing Input : " + input + "\n");
 		one.setInput(input);
 		two.setInput(input);
 
@@ -71,7 +73,7 @@ public class Implementation implements Runnable{
 				System.out.println("  " + two.name() + ": " + input + "\n	Accepted");
 			else
 				System.out.println("  " + two.name() + ": " + input + "\n	Not accepted");
-
+			System.out.println("");
 			testFSA(one, two, FAFunc.UNION);
 			testFSA(one, two, FAFunc.INTERSECTION);
 			testFSA(one, two, FAFunc.DIFF);
@@ -89,7 +91,7 @@ public class Implementation implements Runnable{
 			printAcc(DFABoolOp.Union(one, two));
 			break;
 		case INTERSECTION:
-			System.out.println("  " + one.name() + " ∩ " + two.name() + ": " + input + " (Intersection)");
+			System.out.println("  " + one.name() + " n " + two.name() + ": " + input + " (Intersection)");
 			printAcc(DFABoolOp.Intersection(one, two));
 			break;
 		case DIFF:
@@ -97,7 +99,7 @@ public class Implementation implements Runnable{
 			printAcc(DFABoolOp.Difference(one, two));
 			break;
 		case SYM_DIFF:
-			System.out.println("  Lu - L∩ : " + input + " (Symmetric Difference)");
+			System.out.println("  Lu - Ln : " + input + " (Symmetric Difference)");
 			printAcc(DFABoolOp.SymDifference(one, two));
 			break;
 		}
