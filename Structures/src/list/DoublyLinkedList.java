@@ -100,7 +100,7 @@ public class DoublyLinkedList<E> implements List<E>{
 	}
 
 	public Iterator<E> iterator() {
-		return new DoublyLinkedListIterator();
+		return new DoublyLinkedListIterator<E>();
 	}
 
 	public void remove(E e) {
@@ -172,16 +172,18 @@ public class DoublyLinkedList<E> implements List<E>{
 	}
 	
 	public void print(){
-		Iterator itr = this.iterator();
+		Iterator<E> itr = this.iterator();
 		while(itr.hasNext()){
-			Node<E> x = (Node<E>) itr.next();
+			E x = itr.next();
 			System.out.println(x.toString());
 		}
 	}
 	
-	class DoublyLinkedListIterator implements Iterator<E>{
+	@SuppressWarnings("hiding")
+	class DoublyLinkedListIterator<E> implements Iterator<E>{
 		private int index = 0;
-		private Node<E> current = root.link;
+		@SuppressWarnings("unchecked")
+		private Node<E> current = (Node<E>) root.link;
 		@Override
 		public boolean hasNext() {
 			if(current.next() instanceof RootNode) return false;
@@ -194,7 +196,7 @@ public class DoublyLinkedList<E> implements List<E>{
 			if (!hasNext())
 				throw new NoSuchElementException();
 			if(current instanceof RootNode){
-				current = root.link;
+				current = (Node<E>) root.link;
 				index++;
 				return (E) current;
 			}

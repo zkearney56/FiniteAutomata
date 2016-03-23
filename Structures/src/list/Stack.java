@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class Stack<E> implements StackInterface{
+public class Stack<E> implements StackInterface<E>{
 	
 	private int size = -1;
 	private static final int INITIAL_CAPACITY = 10;
@@ -25,19 +25,21 @@ public class Stack<E> implements StackInterface{
 	}
 	
 	@Override
-	public Iterator iterator() {
+	public Iterator<E> iterator() {
 		// TODO Auto-generated method stub
-		return new StackIterator();
+		return new StackIterator<E>();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public Object peek() {
-		return elementData[size];
+	public E peek() {
+		return (E)elementData[size];
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public Object pop() {
-		Object ele = elementData[size];
+	public E pop() {
+		E ele = (E)elementData[size];
 		elementData[size] = null;
 		size--;
 		return ele;
@@ -58,10 +60,11 @@ public class Stack<E> implements StackInterface{
 		return size+1;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public Object[] toArray() {
+	public E[] toArray() {
 		// TODO Auto-generated method stub
-		return elementData;
+		return (E[])elementData;
 	}
 
 	@Override
@@ -77,7 +80,8 @@ public class Stack<E> implements StackInterface{
 		elementData = Arrays.copyOf(elementData, newCapacity);
 	}
 	
-	private class StackIterator implements Iterator<E> {
+	@SuppressWarnings("hiding")
+	private class StackIterator<E> implements Iterator<E> {
 		private int index = 0;
 
 		public boolean hasNext() {

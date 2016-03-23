@@ -1,17 +1,18 @@
 package map;
 
-import java.util.Arrays;
-
 public class HashMap<K,V> implements Map<K, V>{
 
 	private Entry<K,V>[] table;
 	private int capacity = 10;
 	private int size = 0;
 	
+	@SuppressWarnings("unchecked")
 	public HashMap(){
 		table = new Entry[capacity];
 		size = 0;
 	}
+	
+	@SuppressWarnings("unchecked")
 	@Override
 	public void clear() {
 		table = new Entry[capacity];
@@ -138,11 +139,6 @@ public class HashMap<K,V> implements Map<K, V>{
 	@Override
 	public int size() {
 		return size;
-	}
-	
-	private void increaseCapacity(){
-		int newCapacity = table.length * 2;
-		table = Arrays.copyOf(table, newCapacity);
 	}
 	
     private int hash(K key){
