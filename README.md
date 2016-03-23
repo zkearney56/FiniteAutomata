@@ -1,17 +1,11 @@
 # FiniteAutomata
 
 Author : Zachary Kearney
-
 Copyright by: Zachary Kearney, 2016
-
 zrk1002
-
 FSM Project
-
 Status - Works Correctly
-
 Start Date: 3/15/2016
-
 End Date: 3/22/2016
 
 Problem: 
