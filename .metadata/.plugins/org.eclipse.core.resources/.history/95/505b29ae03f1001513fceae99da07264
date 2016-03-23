@@ -1,0 +1,13 @@
+package list;
+
+public interface StackInterface<E> extends Iterable<E> {
+
+	public E peek();
+	public void push();
+	public E pop();
+	public boolean isEmpty();
+	public int search(E e);
+	public int count();
+	public E[] toArray();
+	
+}

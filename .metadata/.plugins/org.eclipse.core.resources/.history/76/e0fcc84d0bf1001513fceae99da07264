@@ -1,0 +1,37 @@
+package list;
+
+public class DoubleNode<E> extends Node<E>{
+
+	public DoubleNode(Node<E> link, Node<E> end, E e) {
+		super(link, end, e);
+	}
+	
+	public DoubleNode(Node<E> prev, Node<E> next){
+		super(prev,next);
+	}
+	public DoubleNode(Node<E> next){
+		
+	}
+	
+	public DoubleNode() {
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public boolean isRoot() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean hasNext() {
+		if(this.next() instanceof RootNode){
+			return false;
+		}
+		if(this.next() != null){
+			return true;
+		}
+		return false;
+	}
+
+}

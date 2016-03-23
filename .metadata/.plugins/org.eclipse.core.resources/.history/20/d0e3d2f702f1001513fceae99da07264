@@ -1,0 +1,6 @@
+package list;
+
+public interface StackInterface<E> extends Iterable<E> {
+
+	public E 
+}

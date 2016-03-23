@@ -1,0 +1,92 @@
+package list;
+
+import java.util.Iterator;
+
+public class LinkedList<E> implements List<E> {
+
+	private RootNode<E> root, end;
+	private int size = 0;
+	
+	public LinkedList(){
+		
+	}
+	
+	@Override
+	public void add(E e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void add(int index, E e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void clear() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean contains(E e) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public E get(int index) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean isEmpty() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public Iterator<E> iterator() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void remove(E e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public E remove(int index) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void set(E e, int index) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public int size() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public List<E> subList(int index1, int index2) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public E[] toArray() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

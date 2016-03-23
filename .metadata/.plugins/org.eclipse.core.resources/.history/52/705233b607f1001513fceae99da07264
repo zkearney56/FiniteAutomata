@@ -1,0 +1,14 @@
+package map;
+
+public interface Map<K,V> {
+
+	void clear();
+	boolean containsKey(Object key);
+	boolean containsValue(Object value);
+	V get();
+	boolean isEmpty();
+	V remove(K key);
+	int size();
+	void put(K key, V value);
+	
+}

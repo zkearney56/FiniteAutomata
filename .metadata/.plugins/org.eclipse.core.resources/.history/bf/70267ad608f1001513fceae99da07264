@@ -1,0 +1,176 @@
+package map;
+
+import java.util.Arrays;
+
+public class HashMap<K,V> implements Map<K, V>{
+
+	private Entry<K,V>[] table;
+	private int capacity = 10;
+	private int size = 0;
+	
+	public HashMap(){
+		table = new Entry[capacity];
+		size = 0;
+	}
+	@Override
+	public void clear() {
+		table = new Entry[capacity];
+		size = 0;
+	}
+
+	@Override
+	public boolean containsKey(K key) {
+		int hash = hash(key);
+        if(table[hash] == null){
+         return false;
+        }else{
+         Entry<K,V> temp = table[hash];
+         while(temp!= null){
+             if(temp.key.equals(key))
+                 return true;
+             temp = temp.next; //return value corresponding to key.
+         }         
+         return false;   //returns null if key is not found.
+        }
+	}
+
+	@Override
+	public boolean containsValue(V value) {
+		int hash = hash(value);
+        if(table[hash] == null){
+         return false;
+        }else{
+         Entry<K,V> temp = table[hash];
+         while(temp!= null){
+             if(temp.value.equals(value))
+                 return true;
+             temp = temp.next; //return value corresponding to key.
+         }         
+         return false;   //returns null if key is not found.
+        }
+	}
+
+	@Override
+	public K get(K key) {
+		int hash = hash(key);
+        if(table[hash] == null){
+         return null;
+        }else{
+         Entry<K,V> temp = table[hash];
+         while(temp!= null){
+             if(temp.key.equals(key))
+                 return temp.value;
+             temp = temp.next; //return value corresponding to key.
+         }         
+         return null;   //returns null if key is not found.
+        }
+	}
+
+	@Override
+	public boolean isEmpty() {
+		if(size == 0){
+			return false;
+		}
+		else{
+			return true;
+		}
+	}
+
+	public void put(K key, V value) {
+		if(key==null)
+	           return;    //does not allow to store null.
+	      
+	       //calculate hash of key.
+	       int hash=hash(key);
+	       //create new entry.
+	       Entry<K,V> newEntry = new Entry<K,V>(key, value, null);
+	      
+	       //if table location does not contain any entry, store entry there.
+	        if(table[hash] == null){
+	         table[hash] = newEntry;
+	         size++;
+	        }else{
+	           Entry<K,V> previous = null;
+	           Entry<K,V> current = table[hash];
+	           
+	           while(current != null){ //we have reached last entry of bucket.
+	           if(current.key.equals(key)){           
+	               if(previous==null){  //node has to be insert on first of bucket.
+	                     newEntry.next=current.next;
+	                     table[hash]=newEntry;
+	                     return;
+	               }
+	               else{
+	                   newEntry.next=current.next;
+	                   previous.next=newEntry;
+	                   return;
+	               }
+	           }
+	           previous=current;
+	             current = current.next;
+	         }
+	         previous.next = newEntry;
+	         size++;
+	        }
+	}
+
+	@Override
+	public V remove(K key) {
+	       V value = null;
+	       int hash=hash(key);
+	              
+	      if(table[hash] == null){
+	            return value;
+	      }else{
+	        Entry<K,V> previous = null;
+	        Entry<K,V> current = table[hash];
+	        
+	        while(current != null){ //we have reached last entry node of bucket.
+	           if(current.key.equals(key)){
+	        	   current.value = value;
+	               if(previous==null){  //delete first entry node.
+	                     table[hash]=table[hash].next;
+	                     size--;
+	                     return value;
+	               }
+	               else{
+	                     previous.next=current.next;
+	                     size--;
+	                      return value;
+	               }
+	           }
+	           previous=current;
+	             current = current.next;
+	          }
+	        return value;
+	      }
+	}
+
+	@Override
+	public int size() {
+		return size;
+	}
+	
+	private void increaseCapacity(){
+		int newCapacity = table.length * 2;
+		table = Arrays.copyOf(table, newCapacity);
+	}
+	
+    private int hash(K key){
+        return Math.abs(key.hashCode()) % capacity;
+    }
+ 
+	
+	static class Entry<K,V>{
+		K key;
+		V value;
+		Entry<K,V> next;
+		
+		public Entry(K key, V value, Entry<K,V> next){
+			this.key = key;
+			this.value = value;
+			this.next = next;
+		}
+	}
+
+}

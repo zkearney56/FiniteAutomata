@@ -1,0 +1,115 @@
+package map;
+
+import java.util.Arrays;
+
+public class HashMap<K,V> implements Map{
+
+	private Entry<K,V>[] data;
+	private int capacity = 10;
+	private int size = 0;
+	
+	public HashMap(){
+		data = new Entry[capacity];
+		size = 0;
+	}
+	@Override
+	public void clear() {
+		data = new Entry[capacity];
+		size = 0;
+	}
+
+	@Override
+	public boolean containsKey(Object key) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean containsValue(Object value) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public Object get() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean isEmpty() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public void put(Object key, Object value) {
+		if(key==null)
+	           return;    //does not allow to store null.
+	      
+	       //calculate hash of key.
+	       int hash=hash(key);
+	       //create new entry.
+	       Entry<K,V> newEntry = new Entry<K,V>(key, value, null);
+	      
+	       //if table location does not contain any entry, store entry there.
+	        if(table[hash] == null){
+	         table[hash] = newEntry;
+	        }else{
+	           Entry<K,V> previous = null;
+	           Entry<K,V> current = table[hash];
+	           
+	           while(current != null){ //we have reached last entry of bucket.
+	           if(current.key.equals(newKey)){           
+	               if(previous==null){  //node has to be insert on first of bucket.
+	                     newEntry.next=current.next;
+	                     table[hash]=newEntry;
+	                     return;
+	               }
+	               else{
+	                   newEntry.next=current.next;
+	                   previous.next=newEntry;
+	                   return;
+	               }
+	           }
+	           previous=current;
+	             current = current.next;
+	         }
+	         previous.next = newEntry;
+	        }
+	}
+
+	@Override
+	public Object remove(Object key) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int size() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	
+	private void increaseCapacity(){
+		int newCapacity = data.length * 2;
+		data = Arrays.copyOf(data, newCapacity);
+	}
+	
+    private int hash(Object key){
+        return Math.abs(key.hashCode()) % capacity;
+    }
+ 
+	
+	static class Entry<K,V>{
+		Object key;
+		Object value;
+		Entry<K,V> next;
+		
+		public Entry(Object key, Object value, Entry<K,V> next){
+			this.key = key;
+			this.value = value;
+			this.next = next;
+		}
+	}
+
+}

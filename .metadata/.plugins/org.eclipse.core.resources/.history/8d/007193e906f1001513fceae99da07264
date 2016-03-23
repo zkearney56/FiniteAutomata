@@ -1,0 +1,86 @@
+package map;
+
+import java.util.Arrays;
+
+public class HashMap<K,V> implements Map{
+
+	private Entry<K,V>[] data;
+	private int capacity = 10;
+	private int size = 0;
+	
+	public HashMap(){
+		data = new Entry[INITIAL_CAPACITY];
+		size = 0;
+	}
+	@Override
+	public void clear() {
+		data = new Entry[INITIAL_CAPACITY];
+		size = 0;
+	}
+
+	@Override
+	public boolean containsKey(Object key) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean containsValue(Object value) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public Object get() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean isEmpty() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void put(Object key, Object value) {
+		if(key == null){
+			return;
+		}
+	}
+
+	@Override
+	public Object remove(Object key) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int size() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	
+	private void increaseCapacity(){
+		int newCapacity = data.length * 2;
+		data = Arrays.copyOf(data, newCapacity);
+	}
+	
+    private int hash(K key){
+        return Math.abs(key.hashCode()) % capacity;
+    }
+ 
+	
+	static class Entry<K,V>{
+		K key;
+		V value;
+		Entry<K,V> next;
+		
+		public Entry(K key, V value, Entry<K,V> next){
+			this.key = key;
+			this.value = value;
+			this.next = next;
+		}
+	}
+
+}

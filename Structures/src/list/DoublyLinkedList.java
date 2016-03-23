@@ -1,0 +1,209 @@
+package list;
+
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
+public class DoublyLinkedList<E> implements List<E>{
+
+	private RootNode<E> root, end;
+	private int size = 0;
+	
+	public DoublyLinkedList(){
+		root = new RootNode<E>();
+		end = new RootNode<E>();
+		root.link = end;
+		end.link = root;
+		size = 0;
+	}
+	
+	public void add(E e) {
+		if(isEmpty()){
+			Node<E> add = new DataNode<E>();
+			add.setData(e);
+			add.setPrev(root);
+			add.setNext(end);
+			root.link = add;
+			end.link = add;
+			size++;
+		}
+		else{
+			Node<E> add = new DataNode<E>(end.link, end, e);
+			end.link = add;
+			add.prev().setNext(add);
+			size++;
+		}
+	}
+
+	@Override
+	public void add(int index, E e) {
+		if(indexRange(index))
+			throw new IndexOutOfBoundsException();
+		if(index == size){
+			add(e);
+			return;
+		}
+		else if(index == 0){
+			Node<E> next = root.link;
+			Node<E> newNode = new DataNode<E>(root, next, e);
+			next.prev = newNode;
+			root.link = newNode;
+			
+		}
+		int i = 0;
+		Node<E> current = root;
+		while(i < index){
+			current = current.next();
+			i++;
+		}
+		Node<E> next = current.next();
+		Node<E> prev = current;
+		Node<E> newNode = new DataNode<E>(prev, next, e);
+		prev.setNext(newNode);
+		next.setPrev(newNode);
+		size++;
+	}
+
+	@Override
+	public void clear() {
+		root.link = end;
+		end.link = root;
+	}
+
+	@Override
+	public boolean contains(E e) {
+		if(size==0) return false;
+		Node<E> current = root.link;
+		while(true){
+			if(current.next() instanceof RootNode) return false;
+			if(current.getData() == e) return true;
+			current = current.next();
+			
+		}
+	}
+
+	@Override
+	public E get(int index) {
+		if(indexRange(index))
+			throw new IndexOutOfBoundsException();
+		int i = 0;
+		Node<E> current = root.link;
+		while(i < index){
+			current = current.next();
+			i++;
+		}
+		return current.getData();
+	}
+
+	public boolean isEmpty() {
+		if(size==0) return true;
+		else return false;
+	}
+
+	public Iterator<E> iterator() {
+		return new DoublyLinkedListIterator();
+	}
+
+	public void remove(E e) {
+		if(isEmpty()) throw new NoSuchElementException();
+		Node<E> current = root.link;
+		while(!(current.next() instanceof RootNode)){
+			if(current.getData() == e){
+				Node<E> next = current.next();
+				remove(current);
+				current = next;
+			}
+			current = current.next();
+		}
+	}
+
+	private void remove(Node<E> node){
+		Node<E> prev = node.prev();
+		Node<E> next = node.next();
+		prev.setNext(next);
+		next.setPrev(prev);
+		size--;
+	}
+	
+	public E remove(int index) {
+		if(isEmpty()) throw new IndexOutOfBoundsException();
+		Node<E> current = root.link;
+		for(int i = 0; i < index; i ++){
+			current = current.next();
+		}
+		E e = current.getData();
+		remove(current);
+		return e;
+	}
+
+	@Override
+	public void set(E e, int index) {
+		if(isEmpty()) throw new IndexOutOfBoundsException();
+		Node<E> current = root.link;
+		for(int i = 0; i < index; i ++){
+			current = current.next();
+		}
+		current.setData(e);
+		
+	}
+
+	@Override
+	public int size() {
+		return size;
+	}
+
+	@Override
+	public List<E> subList(int index1, int index2) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public E[] toArray() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	private boolean indexRange(int index) {
+		if (index > size || index < 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public void print(){
+		Iterator itr = this.iterator();
+		while(itr.hasNext()){
+			Node<E> x = (Node<E>) itr.next();
+			System.out.println(x.toString());
+		}
+	}
+	
+	class DoublyLinkedListIterator implements Iterator<E>{
+		private int index = 0;
+		private Node<E> current = root.link;
+		@Override
+		public boolean hasNext() {
+			if(current.next() instanceof RootNode) return false;
+			return index < size;
+		}
+
+		@SuppressWarnings("unchecked")
+		@Override
+		public E next() {
+			if (!hasNext())
+				throw new NoSuchElementException();
+			if(current instanceof RootNode){
+				current = root.link;
+				index++;
+				return (E) current;
+			}
+			else{
+				current = current.next();
+				index++;
+				return (E) current;
+			}
+		}
+		
+	}
+}

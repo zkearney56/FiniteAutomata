@@ -1,0 +1,80 @@
+package list;
+
+import java.util.Arrays;
+import java.util.Iterator;
+
+public class Stack<E> implements StackInterface{
+	
+	private int size = 0;
+	private static final int INITIAL_CAPACITY = 10;
+	private Object[] elementData = {};
+	
+	public Stack(){
+		elementData = new Object[INITIAL_CAPACITY];
+		size = 0;
+	}
+	
+	public Stack(Object[] data){
+		elementData = data;
+		size = elementData.length;
+	}
+	
+	public Stack(int capacity){
+		elementData = new Object[capacity];
+	}
+	
+	@Override
+	public Iterator iterator() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object peek() {
+		return elementData[0];
+	}
+
+	@Override
+	public Object pop() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean isEmpty() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public int search(Object e) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int count() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public Object[] toArray() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void push(Object e) {
+		if (size == elementData.length) {
+			increaseCapacity();
+		}
+		elementData[size++] = e;
+	}
+	
+	private void increaseCapacity(){
+		int newCapacity = elementData.length * 2;
+		elementData = Arrays.copyOf(elementData, newCapacity);
+	}
+
+}
