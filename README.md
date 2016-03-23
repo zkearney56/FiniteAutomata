@@ -21,5 +21,9 @@ That is call to the Unioner method with a string as a parameter will return the 
 and a call to the Intersector method with a string as a parameter will return the results for the Intersector and so on.
 In all cases, threads and object-oriented programming methodology MUST be used.
 
+Also includes custom List and Hashmap implementations.
+
 This program was done entirely by me and no part of this program was plagiarized, intentionally or unintentionally, from anybody.
 I would be held accountable and penalized if any part of this program was plagiarized.
+
+=
