@@ -25,7 +25,7 @@ public class Algorithm {
 	}
 	
 	private static int alg1(int val){
-		val = -(val * val) + 65536 * val;
+		val = -(val * val) + 15 * val;
 		return val;
 	}
 }

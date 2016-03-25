@@ -12,7 +12,7 @@ public abstract class Population {
 	private static Crossover type = Crossover.EVERY_OTHER;//Maximum number of gens with same max fitness
 	
 	private double mutCount = 0;
-	private int count = 0, currentElite = 0, generation = 0, genCount = 0, geneLength = 0;
+	private int count = 0, currentElite = -0, generation = 0, genCount = 0, geneLength = 0;
 	
 	private Chromosome elite;
 	private ArrayList<Chromosome> pop;
@@ -135,6 +135,8 @@ public abstract class Population {
 	private void printData(){
 		System.out.println("GENERATION: " + generation);
 		System.out.println("MAX FITNESS:" + elite.getFitness());
+		System.out.println("VALUE: " + elite.getValue());
+		System.out.println(elite.toString());
 	}
 	
 	private void foundMax(){
