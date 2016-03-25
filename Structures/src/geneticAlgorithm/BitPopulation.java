@@ -2,8 +2,8 @@ package geneticAlgorithm;
 
 public class BitPopulation extends Population{
 
-	public BitPopulation(int count, int geneLength, AlgorithmEnum alg) {
-		super(count, geneLength, alg);
+	public BitPopulation(int count, int geneLength, AlgorithmEnum alg, Crossover type) {
+		super(count, geneLength, alg, type);
 	}
 
 	@Override

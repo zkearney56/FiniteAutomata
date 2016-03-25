@@ -6,13 +6,13 @@ import list.ArrayList;
 
 public abstract class Population {
 	
-	private static double MUT_COEF = .005; //Mutation coefficient
+	private static double MUT_COEF = .015; //Mutation coefficient
 	private static int MAX_NUM_GEN = 200; //Maximum number of generations
 	private static int MAX_NUM_FIT = 10;
 	private static Crossover type = Crossover.EVERY_OTHER;//Maximum number of gens with same max fitness
 	
 	private double mutCount = 0;
-	private int count = 0, currentElite = -0, generation = 0, genCount = 0, geneLength = 0;
+	private int count = 0, currentElite = 0, generation = 0, genCount = 0, geneLength = 0;
 	
 	private Chromosome elite;
 	private ArrayList<Chromosome> pop;
@@ -20,10 +20,11 @@ public abstract class Population {
 	private AlgorithmEnum alg = AlgorithmEnum.ALG1;
 
 	
-	public Population(int count, int geneLength, AlgorithmEnum alg){
+	public Population(int count, int geneLength, AlgorithmEnum alg, Crossover type){
 		this.count = count;
 		this.geneLength = geneLength;
 		this.alg = alg;
+		this.type = type;
 		fillPopulation();
 		mutCount = (count * geneLength) * MUT_COEF;
 		System.out.println("NUM MUTATIONS: " + mutCount);
@@ -42,6 +43,7 @@ public abstract class Population {
 	}
 	
 	public final void execute(){
+		firstRun();
 		while(generation < MAX_NUM_GEN && !maxFound){
 		newGeneration();
 		}
@@ -69,19 +71,27 @@ public abstract class Population {
 	private boolean mutateLoop(){
 		for(int i = 1; i < pop.size(); i++){
 			Chromosome mutChrom = pop.get(i);
+			if(!mutChrom.isElite()){
 			for(int y = 0; y < mutChrom.getSize(); y++){
 				if(Math.random() < MUT_COEF){
-					mutChrom.mutate(y);			
+					System.out.println("MUTATION");
+					System.out.println(mutChrom.toString());
+					mutChrom.mutate(y);	
+					System.out.println(mutChrom.toString());
 					return true;
 				}
 			}
-		}
+		}}
 		return false;		
 	}
 	
 	private Chromosome chooseRandom(){
-		Random rand = new Random();		
-		int prob = rand.nextInt(currentElite);
+		Random rand = new Random();
+		int prob = 1;
+		if(elite.getFitness() > 0){
+			prob = rand.nextInt(elite.getFitness());	
+		}
+		
 		int probIndex = 0;
 		while(true){
 			int randIndex = rand.nextInt(pop.size());
@@ -94,8 +104,10 @@ public abstract class Population {
 	
 	private void findElite(){
 		for(int i = 0; i < pop.size(); i++){
-			if(pop.get(i).getFitness() >= currentElite){
+			if(pop.get(i).getFitness() > elite.getFitness()){
+				elite.setElite(false);
 				elite = pop.get(i);
+				elite.setElite(true);
 			}
 		}
 	}
@@ -117,9 +129,23 @@ public abstract class Population {
 	}
 	
 	private void crossover(){
+		ArrayList<Chromosome> newGen = new ArrayList<Chromosome>(count);
+		newGen.add(elite);
+		for(int i = 1; i < count - 1; i++){
+			newGen.add((CrossoverFunc.crossover(chooseRandom(), chooseRandom(), type)));
+		}
+		pop = newGen;
 		pop.set(elite, 0);
-		for(int i = 1; i < count; i++){
-			pop.set((CrossoverFunc.crossover(chooseRandom(), chooseRandom(), type)), i);
+	}
+	
+	private void firstRun(){
+		for(int i = 0; i < pop.size(); i++){
+			if(pop.get(i).getFitness() >= currentElite){
+				elite = pop.get(i);
+				
+			}
+			currentElite = elite.getFitness();
+			elite.setElite(true);
 		}
 	}
 	

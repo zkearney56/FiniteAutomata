@@ -8,5 +8,5 @@ public interface Genome {
 	public int size();
 	public void mutate(int index);
 	public int getIntVal();
-	
+	public void crossover(Genome x, Genome y, Crossover type);
 }

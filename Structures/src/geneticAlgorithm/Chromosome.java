@@ -9,4 +9,6 @@ public interface Chromosome {
 	public Object getGene(int index);
 	public AlgorithmEnum getAlg();
 	public Genome getGenome();
+	public void setElite(boolean bool);
+	public boolean isElite();
 }

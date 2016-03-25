@@ -6,49 +6,51 @@ public class BitGenome implements Genome{
 
 	private ArrayList<Bit> genome;
 	private int size = 0;
-	private int intVal = -1;
 	
 	public BitGenome(int size){
 		this.size = size;
 		genome = new ArrayList<Bit>(size);
+		randomize();
 	}
 	
-	static class Bit{
-		byte dat;
-		
-		Bit(){
-			dat = randomBit();
-		}
-		
-		void flip(){
-			if (dat == 0){
-				dat = (byte) 1;
-			}
-			else{
-				dat = (byte) 0;
+	public BitGenome(int size, Genome x, Genome y, Crossover type){
+		this.size = size;
+		genome = new ArrayList<Bit>(size);
+		if(x.getIntVal() == y.getIntVal()){
+			for(int i = 0; i < x.size(); i++){
+				add(x.get(i));
 			}
 		}
-		
-		byte get(){
-			return dat;
-		}
-		
-		private byte randomBit(){
-			byte returnVal;
-			if(Math.random() < .5){
-				returnVal = (byte) 0;
+		else{
+		switch(type){
+		case EVERY_OTHER:{
+			for(int i = 0; i < size; i ++){
+				if ( (i & 1) == 0 ) {
+					add(x.get(i));
+				} 
+				else {
+					add(y.get(i));
+				}
 			}
-			else{
-				returnVal = (byte) 1;
-			}
-			return returnVal;
+			break;
 		}
+		case SPLIT:{
+			int splitNum = size/2;
+			for(int i = 0; i < splitNum; i++){
+				add(x.get(i));
+			}
+			for(int i = splitNum; i < size; i++){
+				add(y.get(i));
+			}
+			break;
+		}
+		}	
+	}
 	}
 
 	@Override
 	public void add(Object obj) {
 		genome.add((Bit)obj);
-		toInt();
 	}
 
 	@Override
@@ -60,31 +62,22 @@ public class BitGenome implements Genome{
 		for(int i = 0; i < size; i++){
 			genome.add(new Bit());
 		}
-		toInt();
 	}
 	
 	public int size(){
 		return size;
 	}
 	
-	public int toInt(){
-		int value = 0;
-		for(int i = genome.size() - 1, x = 0; i >= 0; i--, x++){
-			if(genome.get(i).get() == 1){
-				value += Math.pow(2, x);
-			}
-		}
-		intVal = value;
-		return intVal;
+	public int getIntVal(){	
+			int value = 0;
+			for(int i = genome.size() - 1, x = 0; i >= 0; i--, x++){
+				if((int)genome.get(i).get() == 1){
+					value += Math.pow(2, x);
+				}
+			}	
+		return value;
 	}
-	
-	public int getIntVal(){
-		if(intVal == -1){
-			return toInt();
-		}
-		return intVal;
-	}
-	
+
 	public String toString(){
 	String str = "";
 	for(int i = 0; i < genome.size(); i++){
@@ -95,7 +88,11 @@ public class BitGenome implements Genome{
 
 	@Override
 	public void mutate(int index) {
-		genome.get(index).flip();	
+		genome.get(index).flip();
 	}
 
+	@Override
+	public void crossover(Genome x, Genome y, Crossover type) {
+		
+	}
 	}

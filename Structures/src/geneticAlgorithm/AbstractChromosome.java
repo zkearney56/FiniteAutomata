@@ -4,61 +4,33 @@ public abstract class AbstractChromosome implements Chromosome{
 
 	private int fitness = 0;
 	private int size = 0;
-	private int intVal = 0;
 	private AlgorithmEnum alg = AlgorithmEnum.ALG1;
 	protected Genome genome;
+	private boolean isElite = false;
 	
 	public AbstractChromosome(int size, AlgorithmEnum alg){
 		this.size = size;
 		this.alg = alg;
 		initGenome(size);
-		genome.randomize();
-		intVal = genome.getIntVal();
+		//genome.randomize();
 		testFitness();
 	}
 	
 	public AbstractChromosome(Chromosome x, Chromosome y, Crossover type){
 		this.size = x.getSize();
 		this.alg = x.getAlg();
-		initGenome(size);
-		if(x.getValue() == y.getValue()){
-			clone(x);
-		}
-		else{
-			crossover(x, y, type);
-			testFitness();
-		}
+		crossover(size, x, y, type);
+		testFitness();
 	}
 	
+	protected abstract void crossover(int size, Chromosome x, Chromosome y, Crossover type);
+	
 	private final void crossover(Chromosome x, Chromosome y, Crossover type){
-		switch(type){
-		case EVERY_OTHER:{
-			for(int i = 0; i < size; i ++){
-				if ( (i & 1) == 0 ) {
-					genome.add(x.getGene(i));
-				} 
-				else {
-					genome.add(y.getGene(i));
-				}
-			}
-			break;
-		}
-		case SPLIT:{
-			int splitNum = size/2;
-			for(int i = 0; i < splitNum; i++){
-				genome.add(x.getGene(i));
-			}
-			for(int i = splitNum; i < size; i++){
-				genome.add(y.getGene(i));
-			}
-			break;
-		}
-		}	
-		intVal = genome.getIntVal();
+		genome.crossover(x.getGenome(), y.getGenome(), type);
 	}
 	
 	public final int getFitness(){
-		return fitness;
+		return Algorithm.calcFitness(genome.getIntVal(), alg);
 	}
 	
 	public final int getSize(){
@@ -66,7 +38,7 @@ public abstract class AbstractChromosome implements Chromosome{
 	}
 	
 	public final int getValue(){
-		return intVal;
+		return genome.getIntVal();
 	}
 	
 	public final void mutate(int index){
@@ -76,7 +48,7 @@ public abstract class AbstractChromosome implements Chromosome{
 	protected abstract void initGenome(int size);
 	
 	public final void testFitness(){
-		fitness = Algorithm.calcFitness(intVal, alg);
+		fitness = Algorithm.calcFitness(genome.getIntVal(), alg);
 	}
 	
 	public final AlgorithmEnum getAlg() {
@@ -92,19 +64,19 @@ public abstract class AbstractChromosome implements Chromosome{
 		return genome;
 	}
 	
-	public final void clone(Chromosome x){
-		this.alg = x.getAlg();
-		this.genome = x.getGenome();
-		this.size = x.getSize();
-		this.fitness = x.getFitness();
-		this.intVal = x.getValue();
-	}
-	
 	public Object getGene(int index){
 		return genome.get(index);
 	}
 	
 	public final void randomize(){
 		genome.randomize();
+	}
+	
+	public final void setElite(boolean bool){
+		isElite = bool;
+	}
+	
+	public final boolean isElite(){
+		return isElite;
 	}
 }
