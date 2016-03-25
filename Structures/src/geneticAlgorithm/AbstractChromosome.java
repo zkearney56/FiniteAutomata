@@ -1,10 +1,13 @@
 package geneticAlgorithm;
 
+import geneticAlgorithm.Algorithm.Algorithm;
+import geneticAlgorithm.Algorithm.AlgorithmEnum;
+
 public abstract class AbstractChromosome implements Chromosome{
 
 	private int fitness = 0;
 	private int size = 0;
-	private AlgorithmEnum alg = AlgorithmEnum.ALG1;
+	private AlgorithmEnum alg = AlgorithmEnum.BYTE_ALG1;
 	protected Genome genome;
 	private boolean isElite = false;
 	
@@ -12,7 +15,7 @@ public abstract class AbstractChromosome implements Chromosome{
 		this.size = size;
 		this.alg = alg;
 		initGenome(size);
-		//genome.randomize();
+		genome.randomize();
 		testFitness();
 	}
 	
@@ -25,20 +28,12 @@ public abstract class AbstractChromosome implements Chromosome{
 	
 	protected abstract void crossover(int size, Chromosome x, Chromosome y, Crossover type);
 	
-	private final void crossover(Chromosome x, Chromosome y, Crossover type){
-		genome.crossover(x.getGenome(), y.getGenome(), type);
-	}
-	
 	public final int getFitness(){
-		return Algorithm.calcFitness(genome.getIntVal(), alg);
+		return Algorithm.calcFitness(genome.getGenome(), alg);
 	}
 	
 	public final int getSize(){
 		return size;
-	}
-	
-	public final int getValue(){
-		return genome.getIntVal();
 	}
 	
 	public final void mutate(int index){
@@ -48,7 +43,7 @@ public abstract class AbstractChromosome implements Chromosome{
 	protected abstract void initGenome(int size);
 	
 	public final void testFitness(){
-		fitness = Algorithm.calcFitness(genome.getIntVal(), alg);
+		fitness = Algorithm.calcFitness(genome.getGenome(), alg);
 	}
 	
 	public final AlgorithmEnum getAlg() {

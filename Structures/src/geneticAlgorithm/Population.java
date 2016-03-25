@@ -2,11 +2,13 @@ package geneticAlgorithm;
 
 import java.util.Random;
 
+import geneticAlgorithm.Algorithm.Algorithm;
+import geneticAlgorithm.Algorithm.AlgorithmEnum;
 import list.ArrayList;
 
 public abstract class Population {
 	
-	private static double MUT_COEF = .015; //Mutation coefficient
+	private static double MUT_COEF = .005; //Mutation coefficient
 	private static int MAX_NUM_GEN = 200; //Maximum number of generations
 	private static int MAX_NUM_FIT = 10;
 	private static Crossover type = Crossover.EVERY_OTHER;//Maximum number of gens with same max fitness
@@ -17,7 +19,7 @@ public abstract class Population {
 	private Chromosome elite;
 	private ArrayList<Chromosome> pop;
 	private boolean maxFound = false;
-	private AlgorithmEnum alg = AlgorithmEnum.ALG1;
+	private AlgorithmEnum alg = AlgorithmEnum.BYTE_ALG1;
 
 	
 	public Population(int count, int geneLength, AlgorithmEnum alg, Crossover type){
@@ -74,10 +76,7 @@ public abstract class Population {
 			if(!mutChrom.isElite()){
 			for(int y = 0; y < mutChrom.getSize(); y++){
 				if(Math.random() < MUT_COEF){
-					System.out.println("MUTATION");
-					System.out.println(mutChrom.toString());
 					mutChrom.mutate(y);	
-					System.out.println(mutChrom.toString());
 					return true;
 				}
 			}
@@ -161,7 +160,7 @@ public abstract class Population {
 	private void printData(){
 		System.out.println("GENERATION: " + generation);
 		System.out.println("MAX FITNESS:" + elite.getFitness());
-		System.out.println("VALUE: " + elite.getValue());
+		System.out.println("VALUE: " + Algorithm.intVal(elite.getGenome().getGenome()));
 		System.out.println(elite.toString());
 	}
 	
@@ -169,7 +168,7 @@ public abstract class Population {
 		System.out.println("\nSOLUTION FOUND");
 		System.out.println("GENERATION: " + generation);
 		System.out.println("MAX FITNESS:" + elite.getFitness());
-		System.out.println("VALUE: " + elite.getValue());
+		System.out.println("VALUE: " + Algorithm.intVal(elite.getGenome().getGenome()));
 		System.out.println(elite.toString());
 	}
 	
