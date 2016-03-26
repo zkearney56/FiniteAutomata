@@ -1,13 +1,18 @@
 package geneticAlgorithm;
 
+import geneticAlgorithm.Algorithm.AlgorithmEnum;
+
 public interface Genome extends Cloneable{
 
-	//public void add(Object obj);
-	public byte get(int index);
-	public void randomize();
-	public int size();
+	public int getFitness();
+	public int getSize();
 	public void mutate(int index);
+	public byte getGene(int index);
+	public void setGene(int index, byte val);
+	public AlgorithmEnum getAlg();
 	public byte[] getGenome();
-	public void crossover(Genome mate, CrossoverEnum type, int arg1, int arg2);
+	public void setElite(boolean bool);
+	public boolean isElite();
 	public Genome clone();
+	public void testFitness();
 }

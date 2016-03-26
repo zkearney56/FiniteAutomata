@@ -1,6 +1,7 @@
 package geneticAlgorithm;
 
 import geneticAlgorithm.Algorithm.AlgorithmEnum;
+import geneticAlgorithm.Algorithm.CrossoverEnum;
 
 public interface Population {
 
@@ -22,20 +23,20 @@ public interface Population {
 	
 	CrossoverEnum getCross();
 
-	Chromosome getChromosome(int index);
+	Genome getChromosome(int index);
 	
-	void setChromosome(Chromosome e, int index);
+	void setChromosome(Genome e, int index);
 
 	void execute();
 	
 	int size();
 	
-	void setElite(Chromosome elite);
+	void setElite(Genome elite);
 	
 	public void incMutCount();
 	
 	public void decMutCount();
 	
-	Chromosome getElite();
+	Genome getElite();
 
 }

@@ -1,4 +1,4 @@
-package geneticAlgorithm;
+package geneticAlgorithm.Algorithm;
 
 public enum CrossoverEnum {
 

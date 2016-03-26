@@ -1,9 +1,9 @@
 package geneticAlgorithm.Byte;
 
-import geneticAlgorithm.Chromosome;
-import geneticAlgorithm.CrossoverEnum;
 import geneticAlgorithm.AbstractPopulation;
+import geneticAlgorithm.Genome;
 import geneticAlgorithm.Algorithm.AlgorithmEnum;
+import geneticAlgorithm.Algorithm.CrossoverEnum;
 
 public class BytePopulation extends AbstractPopulation{
 
@@ -13,8 +13,8 @@ public class BytePopulation extends AbstractPopulation{
 	}
 
 	@Override
-	protected Chromosome addNewChromosome(int geneLength, AlgorithmEnum alg) {
-		return new ByteChromosome(geneLength, alg);
+	protected Genome addNewChromosome(int geneLength, AlgorithmEnum alg) {
+		return new ByteGenome(geneLength, alg);
 	}
 
 }

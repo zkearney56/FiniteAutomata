@@ -1,31 +1,26 @@
 package geneticAlgorithm.Byte;
 
 import geneticAlgorithm.AbstractGenome;
-import geneticAlgorithm.CrossoverEnum;
 import geneticAlgorithm.Genome;
-import list.ArrayList;
+import geneticAlgorithm.Algorithm.AlgorithmEnum;
 
 public class ByteGenome extends AbstractGenome implements Genome{
-
-	public ByteGenome(int size){
-		super(size);
-	}
 	
 	public ByteGenome(Genome x){
 		super(x);
 	}
-
-	public byte randomByte(){
-		byte returnVal;
-		if(Math.random() < .5){
-			returnVal = (byte) 0;
-		}
-		else{
-			returnVal = (byte) 1;
-		}
-		return returnVal;
+	
+	public ByteGenome(int size, AlgorithmEnum alg) {
+		super(size, alg);
+		// TODO Auto-generated constructor stub
 	}
 
+	@Override
+	public Genome clone() {
+		return new ByteGenome(this);
+	}
+
+	@Override
 	public byte mutateByte(byte b) {
 		if(b == 0){
 			b = 1;
@@ -38,7 +33,15 @@ public class ByteGenome extends AbstractGenome implements Genome{
 	}
 
 	@Override
-	public Genome clone() {
-		return new ByteGenome(this);
+	public byte randomByte() {
+		byte returnVal;
+		if(Math.random() < .5){
+			returnVal = (byte) 0;
+		}
+		else{
+			returnVal = (byte) 1;
+		}
+		return returnVal;
 	}
+
 }

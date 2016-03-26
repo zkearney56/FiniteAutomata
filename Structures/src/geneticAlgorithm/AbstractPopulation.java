@@ -4,6 +4,8 @@ import java.util.Random;
 
 import geneticAlgorithm.Algorithm.Algorithm;
 import geneticAlgorithm.Algorithm.AlgorithmEnum;
+import geneticAlgorithm.Algorithm.CrossoverEnum;
+import geneticAlgorithm.Algorithm.GeneticFunc;
 import list.ArrayList;
 
 public abstract class AbstractPopulation implements Population {
@@ -17,8 +19,8 @@ public abstract class AbstractPopulation implements Population {
 	private double mutCount = 0;
 	private int size = 0, currentElite = 0, generation = 0, genCount = 0, geneLength = 0;
 	
-	private Chromosome elite;
-	private ArrayList<Chromosome> pop;
+	private Genome elite;
+	private ArrayList<Genome> pop;
 	private boolean maxFound = false;
 
 
@@ -99,11 +101,11 @@ public abstract class AbstractPopulation implements Population {
 	 * @see geneticAlgorithm.Population#getChromosome(int)
 	 */
 	@Override
-	public final Chromosome getChromosome(int index){
+	public final Genome getChromosome(int index){
 		return pop.get(index);
 	}
 	
-	public final void setChromosome(Chromosome e, int index){
+	public final void setChromosome(Genome e, int index){
 		pop.set(e, index);
 	}
 	
@@ -123,12 +125,12 @@ public abstract class AbstractPopulation implements Population {
 		return size;
 	}
 	
-	public final void setElite(Chromosome elite){
+	public final void setElite(Genome elite){
 		this.elite = elite;
 		elite.setElite(true);
 	}
 	
-	public final Chromosome getElite(){
+	public final Genome getElite(){
 		return elite;
 	}
 	
@@ -139,8 +141,9 @@ public abstract class AbstractPopulation implements Population {
 	public final CrossoverEnum getCross(){
 		return crossType;
 	}
+	
 	private void fillPopulation(){
-		pop = new ArrayList<Chromosome>(size);
+		pop = new ArrayList<Genome>(size);
 		for(int i = 0; i < size; i++){
 			pop.add(addNewChromosome(geneLength, alg));
 		}
@@ -149,57 +152,7 @@ public abstract class AbstractPopulation implements Population {
 		currentElite = elite.getFitness();
 	}
 	
-	protected abstract Chromosome addNewChromosome(int geneLength, AlgorithmEnum alg);
-	 
-	private void mutate(){
-		int x = 0;
-		while(x < mutCount){
-			if(mutateLoop()){
-				x++;
-			}
-		}
-	}
-	
-	private boolean mutateLoop(){
-		for(int i = 1; i < pop.size(); i++){
-			Chromosome mutChrom = pop.get(i);
-			if(!mutChrom.isElite()){
-			for(int y = 0; y < mutChrom.getSize(); y++){
-				if(Math.random() < MUT_COEF){
-					mutChrom.mutate(y);	
-					return true;
-				}
-			}
-		}}
-		return false;		
-	}
-	
-	private Chromosome chooseRandom(){
-		Random rand = new Random();
-		int prob = 1;
-		if(elite.getFitness() > 0){
-			prob = rand.nextInt(elite.getFitness());	
-		}
-		
-		int probIndex = 0;
-		while(true){
-			int randIndex = rand.nextInt(pop.size());
-			probIndex += pop.get(randIndex).getFitness();
-			if(probIndex >= prob){
-				return pop.get(randIndex);
-			}
-		}
-	}
-	
-	private void findElite(){
-		for(int i = 0; i < pop.size(); i++){
-			if(pop.get(i).getFitness() > elite.getFitness()){
-				elite.setElite(false);
-				elite = pop.get(i);
-				elite.setElite(true);
-			}
-		}
-	}
+	protected abstract Genome addNewChromosome(int geneLength, AlgorithmEnum alg);
 
 	private boolean generationCount(){
 		boolean cont = true;
@@ -217,18 +170,6 @@ public abstract class AbstractPopulation implements Population {
 		return cont;
 	}
 	
-	/**
-	private void crossover(){
-		ArrayList<Chromosome> newGen = new ArrayList<Chromosome>(size);
-		newGen.add(elite);
-		for(int i = 1; i < size - 1; i++){
-			newGen.add((CrossoverFunc.crossover(chooseRandom(), chooseRandom(), crossType)));
-		}
-		pop = newGen;
-		pop.set(elite, 0);
-	}
-	*/
-	
 	private void firstRun(){
 		for(int i = 0; i < pop.size(); i++){
 			if(pop.get(i).getFitness() >= currentElite){
@@ -245,7 +186,7 @@ public abstract class AbstractPopulation implements Population {
 		GeneticFunc.findElite(this);
 		printData();
 		if(!generationCount()) return;
-		GeneticFunc.crossOver(this);
+		GeneticFunc.crossover(this);
 		GeneticFunc.mutate(this);
 		generation++;
 		
@@ -254,7 +195,7 @@ public abstract class AbstractPopulation implements Population {
 	private void printData(){
 		System.out.println("GENERATION: " + generation);
 		System.out.println("MAX FITNESS:" + elite.getFitness());
-		System.out.println("VALUE: " + Algorithm.intVal(elite.getGenome().getGenome()));
+		System.out.println("VALUE: " + Algorithm.intVal(elite.getGenome()));
 		System.out.println(elite.toString());
 	}
 	
@@ -262,7 +203,7 @@ public abstract class AbstractPopulation implements Population {
 		System.out.println("\nSOLUTION FOUND");
 		System.out.println("GENERATION: " + generation);
 		System.out.println("MAX FITNESS:" + elite.getFitness());
-		System.out.println("VALUE: " + Algorithm.intVal(elite.getGenome().getGenome()));
+		System.out.println("VALUE: " + Algorithm.intVal(elite.getGenome()));
 		System.out.println(elite.toString());
 	}
 	

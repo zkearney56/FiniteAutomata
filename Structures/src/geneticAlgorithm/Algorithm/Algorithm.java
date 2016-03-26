@@ -142,4 +142,47 @@ public class Algorithm {
 		}
 		return newVal;
 	}
+
+
+	public static String toString(byte[] genome, AlgorithmEnum alg){
+		switch(alg){
+		case BYTE_ALG1:
+			return byteString(genome);
+		case BYTE_ALG2:
+			return byteString(genome);
+		case BYTE_ALG3:
+			return byteString(genome);
+		case BYTE_ALG4:
+			return byteString(genome);
+		case BYTE_ALG5:
+			return byteString(genome);
+		case BYTE_ALG6:
+			return byteString(genome);
+		case LET_ALG1:
+			return charString(genome);
+		case LET_ALG2:
+			return charString(genome);
+		case LET_ALG3:
+			return charString(genome);
+		default:
+			return byteString(genome);
+		
+		}
+	}
+	
+	private static String byteString(byte[] genome){
+		String str = "";
+		for(int i = 0; i < genome.length; i++){
+			str += (int)genome[i];
+		}
+		return str;
+	}
+	
+	private static String charString(byte[] genome){
+		String str = "";
+		for(int i = 0; i < genome.length; i++){
+			str += (char)genome[i];
+		}
+		return str;
+	}
 }

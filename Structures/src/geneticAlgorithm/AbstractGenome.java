@@ -3,63 +3,36 @@ package geneticAlgorithm;
 import java.util.Arrays;
 import java.util.Random;
 
-public abstract class AbstractGenome implements Genome, Cloneable{
+import geneticAlgorithm.Algorithm.Algorithm;
+import geneticAlgorithm.Algorithm.AlgorithmEnum;
 
-	private byte[] genome;
+public abstract class AbstractGenome implements Genome{
+
 	private int size = 0;
+	private AlgorithmEnum alg = AlgorithmEnum.BYTE_ALG1;
+	private byte[] genome;
+	private int fitness = 0;
+	private boolean isElite = false;
 	
-	public AbstractGenome(int size){
+	public AbstractGenome(int size, AlgorithmEnum alg){
 		this.size = size;
+		this.alg = alg;
 		genome = new byte[size];
+		randomize();
+		testFitness();
 	}
 	
 	public AbstractGenome(Genome x){
-		this.size = x.size();
-		genome = Arrays.copyOf(x.getGenome(), size);
+		this.size = x.getSize();
+		this.alg = x.getAlg();
+		this.fitness = x.getFitness();
+		isElite = false;
+		this.genome = Arrays.copyOf(x.getGenome(), size);
 	}
 	
-	public abstract Genome clone();
-	
-	public final void randomize() {
-		for(int i = 0; i < size; i++){
-			genome[i] = randomByte();
-		}
-	}
-
-	public final byte get(int index) {
-		return genome[index];
-	}
-	
-	public final int size() {
-		return genome.length;
-	}
-	
-	public abstract byte randomByte();
-	
-	public void mutate(int index){
-		genome[index] = mutateByte(genome[index]);
-	}
-	
-	public abstract byte mutateByte(byte b);
-	
-	public final byte[] getGenome(){
-		return genome;
-	}
-	
-	public String toString(){
-		String str = "";
-		for(int i = 0; i <genome.length; i++){
-			str += (int)genome[i];
-		}
-		str += "\n";
-		for(int i = 0; i < genome.length; i++){
-			str += (char)genome[i];
-		}
-		return str;
-	}
-
-	public final void crossover(Genome mate, CrossoverEnum type, int arg1, int arg2) {
-
+	/**
+	public final Genome crossover(Genome mate, CrossoverEnum type){
+		Genome clone = this.clone();
 		byte[] y = mate.getGenome();
 
 		switch(type){
@@ -67,7 +40,7 @@ public abstract class AbstractGenome implements Genome, Cloneable{
 		case EVERY_OTHER:{
 			for(int i = 0; i < size; i ++){
 				if (!( (i & 1) == 0 )) {
-					genome[i] = y[i];
+					clone.setGene(i, y[i]);
 				}
 			}
 			break;
@@ -76,7 +49,7 @@ public abstract class AbstractGenome implements Genome, Cloneable{
 		case SPLIT:{
 			int splitNum = size/2;
 			for(int i = splitNum; i < size; i++){
-				genome[i] = y[i];
+				clone.setGene(i, y[i]);
 			}
 			break;
 			
@@ -84,17 +57,19 @@ public abstract class AbstractGenome implements Genome, Cloneable{
 		case SPLIT_FIT_RATIO:
 			Random rand = new Random();
 			int split = rand.nextInt(2) + 1;
+			int fit1 = clone.getFitness();
+			int fit2 = mate.getFitness();
 			switch(split){
 			case 1:{
-				int splitNum =(int)((arg1 / (arg1 + arg2)) * size);
+				int splitNum =(int)((fit1 / (fit1 + fit2)) * size);
 				for(int i = splitNum; i < size; i++){
-					genome[i] = y[i];
+					clone.setGene(i, y[i]);
 				}
 			}
 			case 2:{
-				int splitNum =(int)((arg2 / (arg1 + arg2)) * size);
+				int splitNum =(int)((fit2 / (fit1 + fit2)) * size);
 				for(int i = 0; i < splitNum; i++){
-					genome[i] = y[i];
+					clone.setGene(i, y[i]);
 				}
 			}
 			}
@@ -102,5 +77,67 @@ public abstract class AbstractGenome implements Genome, Cloneable{
 		default:
 			break;
 		}
+		clone.testFitness();
+		return clone;
 	}
+	
+	*/
+	public abstract Genome clone();
+	
+	public final int getFitness(){
+		return fitness;
+	}
+	
+	public final int getSize(){
+		return size;
+	}
+	
+	public final void mutate(int index){
+		genome[index] = mutateByte(genome[index]);
+		testFitness();
+	}
+	
+	public final void testFitness(){
+		fitness = Algorithm.calcFitness(genome, alg);
+	}
+	
+	public final AlgorithmEnum getAlg() {
+		// TODO Auto-generated method stub
+		return alg;
+	}
+	
+	public final String toString(){
+		return Algorithm.toString(genome, alg);
+	}
+	
+	public final byte[] getGenome(){
+		return genome;
+	}
+	
+	public final byte getGene(int index){
+		return genome[index];
+	}
+	
+	public final void setElite(boolean bool){
+		isElite = bool;
+	}
+	
+	public final boolean isElite(){
+		return isElite;
+	}
+	
+	public final void randomize() {
+		for(int i = 0; i < size; i++){
+			genome[i] = randomByte();
+		}
+	}
+	
+	public void setGene(int index, byte dat){
+		genome[index] = dat;
+	}
+	
+	public abstract byte mutateByte(byte b);
+	
+	public abstract byte randomByte();
+
 }

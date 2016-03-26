@@ -1,27 +1,17 @@
-package geneticAlgorithm.Letter;
+package geneticAlgorithm.old;
 
 import java.util.Random;
 
-import geneticAlgorithm.AbstractGenome;
-import geneticAlgorithm.Genome;
-import geneticAlgorithm.Algorithm.AlgorithmEnum;
+public class LetterChromosome extends AbstractChromosome implements Chromosome{
 
-public class LetterGenome extends AbstractGenome implements Genome{
+	public LetterChromosome(int size){
+		super(size);
+	}
 	
-	public LetterGenome(Genome x){
+	public LetterChromosome(Chromosome x){
 		super(x);
 	}
 	
-	public LetterGenome(int size, AlgorithmEnum alg) {
-		super(size, alg);
-		// TODO Auto-generated constructor stub
-	}
-
-	@Override
-	public Genome clone() {
-		return new LetterGenome(this);
-	}
-
 	public byte randomByte(){
 		Random rand = new Random();
 		switch(rand.nextInt(26)){
@@ -60,4 +50,9 @@ public class LetterGenome extends AbstractGenome implements Genome{
 		return randomByte();
 	}
 
+	@Override
+	public Chromosome clone() {
+		return new LetterChromosome(this);
+	}
+	
 }

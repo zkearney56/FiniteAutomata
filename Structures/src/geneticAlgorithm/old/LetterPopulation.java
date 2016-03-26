@@ -1,7 +1,7 @@
-package geneticAlgorithm.Letter;
+package geneticAlgorithm.old;
 
-import geneticAlgorithm.AbstractPopulation;
 import geneticAlgorithm.Genome;
+import geneticAlgorithm.AbstractPopulation;
 import geneticAlgorithm.Algorithm.AlgorithmEnum;
 import geneticAlgorithm.Algorithm.CrossoverEnum;
 
