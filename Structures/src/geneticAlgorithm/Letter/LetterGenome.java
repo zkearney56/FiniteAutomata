@@ -2,33 +2,20 @@ package geneticAlgorithm.Letter;
 
 import java.util.Random;
 
-import geneticAlgorithm.Crossover;
+import geneticAlgorithm.AbstractGenome;
 import geneticAlgorithm.Genome;
-import list.ArrayList;
 
-public class LetterGenome implements Genome{
-
-	private byte[] genome;
-	int size = 0;
+public class LetterGenome extends AbstractGenome implements Genome{
 
 	public LetterGenome(int size){
-		this.size = size;
-		genome = new byte[size];
-	}
-	@Override
-	public byte get(int index) {
-		return genome[index];
-	}
-
-	@Override
-	public void randomize() {
-		for(int i = 0; i < size; i++){
-			genome[i] = randomByte();
-		}
+		super(size);
 	}
 	
-	private byte randomByte(){
-		byte returnVal;
+	public LetterGenome(Genome x){
+		super(x);
+	}
+	
+	public byte randomByte(){
 		Random rand = new Random();
 		switch(rand.nextInt(26)){
 		case 0: return 'a';
@@ -60,57 +47,15 @@ public class LetterGenome implements Genome{
 		}
 		return '?';
 	}
-
-	@Override
-	public int size() {
-		return genome.length;
+	
+	
+	public byte mutateByte(byte b) {
+		return randomByte();
 	}
 
 	@Override
-	public void mutate(int index) {
-		genome[index] = randomByte();		
-	}
-
-	@Override
-	public void crossover(Genome x, Genome y, Crossover type) {
-		
-		byte[] xx = x.getGenome();
-		byte[] yy = y.getGenome();
-
-		switch(type){
-		case EVERY_OTHER:{
-			for(int i = 0; i < size; i ++){
-				if ( (i & 1) == 0 ) {
-					genome[i] = xx[i];
-				} 
-				else {
-					genome[i] = yy[i];
-				}
-			}
-			break;
-		}
-		case SPLIT:{
-			int splitNum = size/2;
-			for(int i = 0; i < splitNum; i++){
-				genome[i] = xx[i];
-			}
-			for(int i = splitNum; i < size; i++){
-				genome[i] = yy[i];
-			}
-			break;
-		}
-		}
+	public Genome clone() {
+		return new LetterGenome(this);
 	}
 	
-	public byte[] getGenome(){
-		return genome;
-	}
-
-	public String toString(){
-		String str = "";
-		for(int i = 0; i <genome.length; i++){
-			str += (char)genome[i];
-		}
-		return str;
-	}
 }

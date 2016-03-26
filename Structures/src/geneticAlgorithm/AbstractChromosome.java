@@ -5,10 +5,10 @@ import geneticAlgorithm.Algorithm.AlgorithmEnum;
 
 public abstract class AbstractChromosome implements Chromosome{
 
-	private int fitness = 0;
 	private int size = 0;
 	private AlgorithmEnum alg = AlgorithmEnum.BYTE_ALG1;
 	protected Genome genome;
+	private int fitness = 0;
 	private boolean isElite = false;
 	
 	public AbstractChromosome(int size, AlgorithmEnum alg){
@@ -19,17 +19,31 @@ public abstract class AbstractChromosome implements Chromosome{
 		testFitness();
 	}
 	
-	public AbstractChromosome(Chromosome x, Chromosome y, Crossover type){
+	public AbstractChromosome(Chromosome x){
 		this.size = x.getSize();
 		this.alg = x.getAlg();
-		crossover(size, x, y, type);
-		testFitness();
+		this.fitness = x.getFitness();
+		isElite = false;
+		this.genome = x.getGenome().clone();
 	}
 	
-	protected abstract void crossover(int size, Chromosome x, Chromosome y, Crossover type);
+	
+	public final Chromosome crossover(Chromosome mate, CrossoverEnum type){
+		Chromosome clone = this.clone();
+		if(type == CrossoverEnum.SPLIT_FIT_RATIO){
+		clone.getGenome().crossover(mate.getGenome(), type, clone.getFitness(), mate.getFitness());
+		}
+		else{
+		clone.getGenome().crossover(mate.getGenome(), type, 0, 0);
+		}
+		testFitness();
+		return clone;
+	}
+	
+	public abstract Chromosome clone();
 	
 	public final int getFitness(){
-		return Algorithm.calcFitness(genome.getGenome(), alg);
+		return fitness;
 	}
 	
 	public final int getSize(){
@@ -38,6 +52,7 @@ public abstract class AbstractChromosome implements Chromosome{
 	
 	public final void mutate(int index){
 		genome.mutate(index);
+		testFitness();
 	}
 	
 	protected abstract void initGenome(int size);

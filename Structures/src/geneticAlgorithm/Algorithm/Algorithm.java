@@ -12,6 +12,39 @@ public class Algorithm {
 		LETTERSOLUTION = input.getBytes();
 	}
 	
+	public static int testSize(AlgorithmEnum alg){
+		switch(alg){
+		case BYTE_ALG1:{ 
+			return 4;//4bit
+		}
+		case BYTE_ALG2: { //8bit
+			return 8;
+		}
+		case BYTE_ALG3: { //12bit
+			return 12;
+		}
+		case BYTE_ALG4: { //16 bit
+			return 16;
+		}
+		case BYTE_ALG5: { //20 bit
+			return 20;
+		}
+		case BYTE_ALG6: { //64 bit
+			return SOLUTION.length;
+		}
+		case LET_ALG1: { //14bit
+			return LETTERSOLUTION.length;
+		}
+		case LET_ALG2:{
+			break;
+		}
+		case LET_ALG3: {
+			break;
+		}
+		}
+		return 0;
+	}
+	
 	public static int calcFitness(byte[] genome, AlgorithmEnum alg){
 		switch(alg){
 		case BYTE_ALG1:{ //4bit

@@ -1,13 +1,13 @@
 package geneticAlgorithm.Letter;
 
 import geneticAlgorithm.Chromosome;
-import geneticAlgorithm.Crossover;
-import geneticAlgorithm.Population;
+import geneticAlgorithm.CrossoverEnum;
+import geneticAlgorithm.AbstractPopulation;
 import geneticAlgorithm.Algorithm.AlgorithmEnum;
 
-public class LetterPopulation extends Population{
+public class LetterPopulation extends AbstractPopulation{
 
-	public LetterPopulation(int count, int geneLength, AlgorithmEnum alg, Crossover type) {
+	public LetterPopulation(int count, int geneLength, AlgorithmEnum alg, CrossoverEnum type) {
 		super(count, geneLength, alg, type);
 		// TODO Auto-generated constructor stub
 	}

@@ -1,31 +1,21 @@
 package geneticAlgorithm.Byte;
 
-import geneticAlgorithm.Crossover;
+import geneticAlgorithm.AbstractGenome;
+import geneticAlgorithm.CrossoverEnum;
 import geneticAlgorithm.Genome;
 import list.ArrayList;
 
-public class ByteGenome implements Genome{
-
-	private byte[] genome;
-	int size = 0;
+public class ByteGenome extends AbstractGenome implements Genome{
 
 	public ByteGenome(int size){
-		this.size = size;
-		genome = new byte[size];
-	}
-	@Override
-	public byte get(int index) {
-		return genome[index];
-	}
-
-	@Override
-	public void randomize() {
-		for(int i = 0; i < size; i++){
-			genome[i] = randomByte();
-		}
+		super(size);
 	}
 	
-	private byte randomByte(){
+	public ByteGenome(Genome x){
+		super(x);
+	}
+
+	public byte randomByte(){
 		byte returnVal;
 		if(Math.random() < .5){
 			returnVal = (byte) 0;
@@ -36,62 +26,19 @@ public class ByteGenome implements Genome{
 		return returnVal;
 	}
 
-	@Override
-	public int size() {
-		return genome.length;
-	}
-
-	@Override
-	public void mutate(int index) {
-		if(genome[index] == 0){
-			genome[index] = 1;
+	public byte mutateByte(byte b) {
+		if(b == 0){
+			b = 1;
 		}
 		else{
-			genome[index] = 0;
+			b = 0;
 		}
+		return b;
 		
 	}
 
 	@Override
-	public void crossover(Genome x, Genome y, Crossover type) {
-		
-		byte[] xx = x.getGenome();
-		byte[] yy = y.getGenome();
-
-		switch(type){
-		case EVERY_OTHER:{
-			for(int i = 0; i < size; i ++){
-				if ( (i & 1) == 0 ) {
-					genome[i] = xx[i];
-				} 
-				else {
-					genome[i] = yy[i];
-				}
-			}
-			break;
-		}
-		case SPLIT:{
-			int splitNum = size/2;
-			for(int i = 0; i < splitNum; i++){
-				genome[i] = xx[i];
-			}
-			for(int i = splitNum; i < size; i++){
-				genome[i] = yy[i];
-			}
-			break;
-		}
-		}
-	}
-	
-	public byte[] getGenome(){
-		return genome;
-	}
-
-	public String toString(){
-		String str = "";
-		for(int i = 0; i <genome.length; i++){
-			str += (int)genome[i];
-		}
-		return str;
+	public Genome clone() {
+		return new ByteGenome(this);
 	}
 }

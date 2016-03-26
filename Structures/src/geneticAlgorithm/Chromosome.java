@@ -2,7 +2,7 @@ package geneticAlgorithm;
 
 import geneticAlgorithm.Algorithm.AlgorithmEnum;
 
-public interface Chromosome {
+public interface Chromosome extends Cloneable{
 
 	public int getFitness();
 	public int getSize();
@@ -12,4 +12,6 @@ public interface Chromosome {
 	public Genome getGenome();
 	public void setElite(boolean bool);
 	public boolean isElite();
+	public Chromosome crossover(Chromosome mate, CrossoverEnum type);
+	public Chromosome clone();
 }

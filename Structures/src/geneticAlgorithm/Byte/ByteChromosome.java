@@ -2,7 +2,7 @@ package geneticAlgorithm.Byte;
 
 import geneticAlgorithm.AbstractChromosome;
 import geneticAlgorithm.Chromosome;
-import geneticAlgorithm.Crossover;
+import geneticAlgorithm.CrossoverEnum;
 import geneticAlgorithm.Algorithm.AlgorithmEnum;
 
 public class ByteChromosome extends AbstractChromosome implements Chromosome{
@@ -12,20 +12,18 @@ public class ByteChromosome extends AbstractChromosome implements Chromosome{
 		// TODO Auto-generated constructor stub
 	}
 
-	public ByteChromosome(Chromosome x, Chromosome y, Crossover cross){
-		super(x,y,cross);
-	}
-
-	@Override
-	protected void crossover(int size, Chromosome x, Chromosome y, Crossover type) {
-		genome = new ByteGenome(size);
-		genome.crossover(x.getGenome(), y.getGenome(), type);
-		
+	public ByteChromosome(Chromosome x){
+		super(x);
 	}
 
 	@Override
 	protected void initGenome(int size) {
 		genome = new ByteGenome(size);	
+	}
+
+	@Override
+	public Chromosome clone() {
+		return new ByteChromosome(this);
 	}
 
 }

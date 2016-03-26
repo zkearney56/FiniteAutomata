@@ -1,13 +1,13 @@
 package geneticAlgorithm.Byte;
 
 import geneticAlgorithm.Chromosome;
-import geneticAlgorithm.Crossover;
-import geneticAlgorithm.Population;
+import geneticAlgorithm.CrossoverEnum;
+import geneticAlgorithm.AbstractPopulation;
 import geneticAlgorithm.Algorithm.AlgorithmEnum;
 
-public class BytePopulation extends Population{
+public class BytePopulation extends AbstractPopulation{
 
-	public BytePopulation(int count, int geneLength, AlgorithmEnum alg, Crossover type) {
+	public BytePopulation(int count, int geneLength, AlgorithmEnum alg, CrossoverEnum type) {
 		super(count, geneLength, alg, type);
 		// TODO Auto-generated constructor stub
 	}
