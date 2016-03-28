@@ -67,14 +67,31 @@ public class GeneticFunc {
 	public static void crossover(Population pop){
 		pop.setChromosome(pop.getElite(), 0);
 		for(int i = 1; i < pop.size(); i++){
-			pop.setChromosome(cross(pop), i);
+			boolean hasMated = false;
+			while(!hasMated){
+				Genome xx = chooseRandom(pop);
+				Genome yy = chooseRandom(pop);
+				if(newMate(xx,yy)){
+					pop.setChromosome(cross(xx,yy,pop.getCross()), i);
+					hasMated = true;
+				}
+			}
 		}
 	}
 	
-	private static Genome cross(Population pop){
-		Genome xx = chooseRandom(pop);
-		Genome yy = chooseRandom(pop);
-		CrossoverEnum type = pop.getCross();
+	private static boolean newMate(Genome xx, Genome yy){
+		if(!xx.hasMated(yy) && !yy.hasMated(xx)){
+			xx.addMate(yy);
+			yy.addMate(xx);
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+	
+	private static Genome cross(Genome xx, Genome yy, CrossoverEnum type){
+		
 		Genome clone = xx.clone();
 		int size = clone.getSize();
 		byte[] y = yy.getGenome();
@@ -98,7 +115,7 @@ public class GeneticFunc {
 			break;
 			
 		}
-		case SPLIT_FIT_RATIO:
+		case SPLIT_FIT_RATIO:{
 			Random rand = new Random();
 			int split = rand.nextInt(2) + 1;
 			int fit1 = clone.getFitness();
@@ -118,6 +135,15 @@ public class GeneticFunc {
 			}
 			}
 			break;
+		}
+		/**
+		case LETTER:{
+			for(int i = 0; i < size; i ++){
+				clone.setGene(i, Algorithm.crossChar(clone.getGene(i), y[i]));
+		}
+		break;
+		}
+		*/
 		default:
 			break;
 		}

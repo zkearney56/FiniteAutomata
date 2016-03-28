@@ -15,4 +15,7 @@ public interface Genome extends Cloneable{
 	public boolean isElite();
 	public Genome clone();
 	public void testFitness();
+	public void addMate(Genome mate);
+	public boolean hasMated(Genome mate);
+	
 }

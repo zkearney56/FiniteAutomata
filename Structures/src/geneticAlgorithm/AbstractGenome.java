@@ -5,12 +5,14 @@ import java.util.Random;
 
 import geneticAlgorithm.Algorithm.Algorithm;
 import geneticAlgorithm.Algorithm.AlgorithmEnum;
+import list.ArrayList;
 
 public abstract class AbstractGenome implements Genome{
 
 	private int size = 0;
 	private AlgorithmEnum alg = AlgorithmEnum.BYTE_ALG1;
 	private byte[] genome;
+	private ArrayList<Genome> mates;
 	private int fitness = 0;
 	private boolean isElite = false;
 	
@@ -18,6 +20,7 @@ public abstract class AbstractGenome implements Genome{
 		this.size = size;
 		this.alg = alg;
 		genome = new byte[size];
+		mates = new ArrayList<Genome>();
 		randomize();
 		testFitness();
 	}
@@ -28,6 +31,7 @@ public abstract class AbstractGenome implements Genome{
 		this.fitness = x.getFitness();
 		isElite = false;
 		this.genome = Arrays.copyOf(x.getGenome(), size);
+		mates = new ArrayList<Genome>();
 	}
 	
 	public abstract Genome clone();
@@ -87,5 +91,13 @@ public abstract class AbstractGenome implements Genome{
 	public abstract byte mutateByte(byte b);
 	
 	public abstract byte randomByte();
+	
+	public final void addMate(Genome mate){
+		mates.add(mate);
+	}
+	
+	public boolean hasMated(Genome mate){
+		return mates.contains(mate);
+	}
 
 }

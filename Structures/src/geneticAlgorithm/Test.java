@@ -10,12 +10,12 @@ public class Test {
 
 	public static void main(String args[]){
 		
-		Algorithm.setLetterSolution("harry");
-		AlgorithmEnum alg = AlgorithmEnum.BYTE_ALG4;
-		Population testPop = new BytePopulation(10, Algorithm.testSize(alg), alg, CrossoverEnum.SPLIT_FIT_RATIO);
+		Algorithm.setLetterSolution("cccccccc");
+		AlgorithmEnum alg = AlgorithmEnum.BYTE_ALG6;
+		Population testPop = new BytePopulation(200, Algorithm.testSize(alg), alg, CrossoverEnum.SPLIT_FIT_RATIO);
 		testPop.setMutCoef(.015);
-		testPop.setMaxFit(250);
-		testPop.setMaxGen(2500);
+		testPop.setMaxFit(200);
+		testPop.setMaxGen(25000);
 		testPop.execute();
 		
 	}
