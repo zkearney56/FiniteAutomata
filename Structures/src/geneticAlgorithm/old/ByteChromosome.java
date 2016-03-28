@@ -1,5 +1,5 @@
 package geneticAlgorithm.old;
-
+/**
 import geneticAlgorithm.Algorithm.CrossoverEnum;
 import list.ArrayList;
 
@@ -40,3 +40,4 @@ public class ByteChromosome extends AbstractChromosome implements Chromosome{
 		return new ByteChromosome(this);
 	}
 }
+*/

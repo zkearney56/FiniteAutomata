@@ -1,5 +1,6 @@
 package geneticAlgorithm.old;
 
+/**
 import java.util.Arrays;
 import java.util.Random;
 
@@ -106,3 +107,4 @@ public abstract class AbstractChromosome implements Chromosome, Cloneable{
 		}
 	}
 }
+*/

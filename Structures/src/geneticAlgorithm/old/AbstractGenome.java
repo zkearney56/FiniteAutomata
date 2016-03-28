@@ -1,5 +1,5 @@
-package geneticAlgorithm;
-
+package geneticAlgorithm.old;
+/**
 import geneticAlgorithm.Algorithm.Algorithm;
 import geneticAlgorithm.Algorithm.AlgorithmEnum;
 
@@ -90,3 +90,4 @@ public abstract class AbstractGenome implements Genome{
 		return isElite;
 	}
 }
+*/

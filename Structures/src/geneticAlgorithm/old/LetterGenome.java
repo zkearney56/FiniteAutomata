@@ -1,5 +1,5 @@
 package geneticAlgorithm.old;
-
+/**
 import geneticAlgorithm.AbstractGenome;
 import geneticAlgorithm.Genome;
 import geneticAlgorithm.Algorithm.AlgorithmEnum;
@@ -28,3 +28,4 @@ public class LetterGenome extends AbstractGenome implements Genome{
 	}
 
 }
+*/

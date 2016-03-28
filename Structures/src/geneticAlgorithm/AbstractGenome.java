@@ -30,58 +30,6 @@ public abstract class AbstractGenome implements Genome{
 		this.genome = Arrays.copyOf(x.getGenome(), size);
 	}
 	
-	/**
-	public final Genome crossover(Genome mate, CrossoverEnum type){
-		Genome clone = this.clone();
-		byte[] y = mate.getGenome();
-
-		switch(type){
-		
-		case EVERY_OTHER:{
-			for(int i = 0; i < size; i ++){
-				if (!( (i & 1) == 0 )) {
-					clone.setGene(i, y[i]);
-				}
-			}
-			break;
-		}
-		
-		case SPLIT:{
-			int splitNum = size/2;
-			for(int i = splitNum; i < size; i++){
-				clone.setGene(i, y[i]);
-			}
-			break;
-			
-		}
-		case SPLIT_FIT_RATIO:
-			Random rand = new Random();
-			int split = rand.nextInt(2) + 1;
-			int fit1 = clone.getFitness();
-			int fit2 = mate.getFitness();
-			switch(split){
-			case 1:{
-				int splitNum =(int)((fit1 / (fit1 + fit2)) * size);
-				for(int i = splitNum; i < size; i++){
-					clone.setGene(i, y[i]);
-				}
-			}
-			case 2:{
-				int splitNum =(int)((fit2 / (fit1 + fit2)) * size);
-				for(int i = 0; i < splitNum; i++){
-					clone.setGene(i, y[i]);
-				}
-			}
-			}
-			break;
-		default:
-			break;
-		}
-		clone.testFitness();
-		return clone;
-	}
-	
-	*/
 	public abstract Genome clone();
 	
 	public final int getFitness(){

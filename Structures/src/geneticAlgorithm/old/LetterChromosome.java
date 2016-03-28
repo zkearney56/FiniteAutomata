@@ -1,5 +1,5 @@
 package geneticAlgorithm.old;
-
+/**
 import java.util.Random;
 
 public class LetterChromosome extends AbstractChromosome implements Chromosome{
@@ -56,3 +56,5 @@ public class LetterChromosome extends AbstractChromosome implements Chromosome{
 	}
 	
 }
+
+*/

@@ -1,5 +1,5 @@
 package geneticAlgorithm.old;
-
+/**
 import geneticAlgorithm.Genome;
 import geneticAlgorithm.AbstractPopulation;
 import geneticAlgorithm.Algorithm.AlgorithmEnum;
@@ -18,3 +18,4 @@ public class BytePopulation extends AbstractPopulation{
 	}
 
 }
+*/

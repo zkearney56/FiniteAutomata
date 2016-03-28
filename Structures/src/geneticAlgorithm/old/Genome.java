@@ -1,5 +1,5 @@
 package geneticAlgorithm.old;
-
+/**
 import geneticAlgorithm.Algorithm.AlgorithmEnum;
 
 public interface Genome extends Cloneable{
@@ -15,3 +15,4 @@ public interface Genome extends Cloneable{
 	public Genome crossover(Genome mate, CrossoverEnum type);
 	public Genome clone();
 }
+*/

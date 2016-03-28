@@ -4,16 +4,12 @@ import java.util.Random;
 
 import geneticAlgorithm.Genome;
 import geneticAlgorithm.Population;
-import geneticAlgorithm.old.ByteGenome;
-import geneticAlgorithm.old.LetterGenome;
-import list.ArrayList;
 
 public class GeneticFunc {
 
 	public static void mutate(Population pop){
 		pop.incMutCount();
 		int x = 1;
-		double mutCount = pop.getMutCount();
 		while(x <= pop.getMutCount()){
 			mutateLoop(pop);
 			if(mutateLoop(pop)){

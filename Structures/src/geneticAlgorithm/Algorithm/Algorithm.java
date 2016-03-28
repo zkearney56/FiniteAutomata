@@ -7,6 +7,7 @@ public class Algorithm {
 	
 	public static byte[] LETTERSOLUTION = {'z','a','c','h','a','r','y','k','e','a','r','n','e','y'};
 
+	public static byte[] GENESOLUTION = {01,11,11,00,11,01,10,10,01,11,00,11,10,01,11,01,11,01};
 	
 	public static void setLetterSolution(String input){
 		LETTERSOLUTION = input.getBytes();
@@ -41,6 +42,12 @@ public class Algorithm {
 		case LET_ALG3: {
 			break;
 		}
+		case GENE_ALG1:
+			return GENESOLUTION.length;
+		case GENE_ALG2:
+			break;
+		default:
+			break;
 		}
 		return 0;
 	}
@@ -80,6 +87,12 @@ public class Algorithm {
 		case LET_ALG3: {
 			break;
 		}
+		case GENE_ALG1:
+			return genealg1(genome);
+		case GENE_ALG2:
+			break;
+		default:
+			break;
 		}
 		return 0;
 	}
@@ -142,7 +155,21 @@ public class Algorithm {
 		}
 		return newVal;
 	}
-
+	
+	private static int genealg1(byte [] genome){
+		int newVal = 0;
+		for(int i = 0; i < GENESOLUTION.length; i++){
+			byte val = genome[i];
+			byte testVal = GENESOLUTION[i];
+			if (val == testVal){
+				newVal += 2;
+			}
+			else if ((val == 01 || val == 10) && (testVal == 00 || testVal == 11)){
+				newVal += 1;
+			}
+		}
+		return newVal;
+		}
 
 	public static String toString(byte[] genome, AlgorithmEnum alg){
 		switch(alg){
