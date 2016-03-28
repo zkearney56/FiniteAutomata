@@ -1,6 +1,15 @@
 package geneticAlgorithm;
 
-import java.util.Random;
+/*
+ * Written by: Zachary Kearney
+ * Copyright by: Zachary Kearney, 2016
+ *
+ * Program: AbstractPopulation.java
+ * Date: March 22, 2016
+ *
+ * Description: Abstract class for implementation of a Population.
+ * 
+ */
 
 import geneticAlgorithm.Algorithm.Algorithm;
 import geneticAlgorithm.Algorithm.AlgorithmEnum;
@@ -10,11 +19,11 @@ import list.ArrayList;
 
 public abstract class AbstractPopulation implements Population {
 	
-	private static double MUT_COEF = .005; //Mutation coefficient
-	private static int MAX_NUM_GEN = 200; //Maximum number of generations
-	private static int MAX_NUM_FIT = 10;
-	private static CrossoverEnum crossType = CrossoverEnum.EVERY_OTHER;//Maximum number of gens with same max fitness
-	private static AlgorithmEnum alg = AlgorithmEnum.BYTE_ALG1;
+	private double MUT_COEF = .005; //Mutation coefficient
+	private int MAX_NUM_GEN = 200; //Maximum number of generations
+	private int MAX_NUM_FIT = 10;
+	private CrossoverEnum crossType = CrossoverEnum.EVERY_OTHER;//Maximum number of gens with same max fitness
+	private AlgorithmEnum alg = AlgorithmEnum.BYTE_ALG1;
 	
 	private double mutCount = 0;
 	private int size = 0, currentElite = 0, generation = 0, genCount = 0, geneLength = 0;
@@ -34,25 +43,18 @@ public abstract class AbstractPopulation implements Population {
 		setMutCoef(MUT_COEF);
 	}
 	
-	/* (non-Javadoc)
-	 * @see geneticAlgorithm.Population#setMaxGen(int)
-	 */
+	public abstract Genome generateGenome(int geneLength, AlgorithmEnum alg);
+
 	@Override
 	public final void setMaxGen(int maxGen){
 		MAX_NUM_GEN = maxGen;
 	}
 	
-	/* (non-Javadoc)
-	 * @see geneticAlgorithm.Population#setMaxFit(int)
-	 */
 	@Override
 	public final void setMaxFit(int maxFit){
 		MAX_NUM_FIT = maxFit;
 	}
 	
-	/* (non-Javadoc)
-	 * @see geneticAlgorithm.Population#setMutCoef(double)
-	 */
 	@Override
 	public final void setMutCoef(double mutcoef){
 		MUT_COEF = mutcoef;
@@ -65,53 +67,36 @@ public abstract class AbstractPopulation implements Population {
 	public final void decMutCount(){
 		mutCount--;
 	}
-	/* (non-Javadoc)
-	 * @see geneticAlgorithm.Population#getMutCoef()
-	 */
+
 	@Override
 	public final double getMutCoef(){
 		return MUT_COEF;
 	}
 	
-	/* (non-Javadoc)
-	 * @see geneticAlgorithm.Population#getMaxGen()
-	 */
 	@Override
 	public final int getMaxGen(){
 		return MAX_NUM_GEN;
 	}
-	
-	/* (non-Javadoc)
-	 * @see geneticAlgorithm.Population#getMaxFit()
-	 */
+
 	@Override
 	public final int getMaxFit(){
 		return MAX_NUM_FIT;
 	}
-	
-	/* (non-Javadoc)
-	 * @see geneticAlgorithm.Population#getMutCount()
-	 */
+
 	@Override
 	public final double getMutCount(){
 		return mutCount;
 	}
-	
-	/* (non-Javadoc)
-	 * @see geneticAlgorithm.Population#getChromosome(int)
-	 */
+
 	@Override
-	public final Genome getChromosome(int index){
+	public final Genome getGenome(int index){
 		return pop.get(index);
 	}
 	
-	public final void setChromosome(Genome e, int index){
+	public final void setGenome(Genome e, int index){
 		pop.set(e, index);
 	}
-	
-	/* (non-Javadoc)
-	 * @see geneticAlgorithm.Population#execute()
-	 */
+
 	@Override
 	public final void execute(){
 		firstRun();
@@ -145,14 +130,12 @@ public abstract class AbstractPopulation implements Population {
 	private void fillPopulation(){
 		pop = new ArrayList<Genome>(size);
 		for(int i = 0; i < size; i++){
-			pop.add(addNewChromosome(geneLength, alg));
+			pop.add(generateGenome(geneLength, alg));
 		}
 		elite = pop.get(0);
 		elite.setElite(true);
 		currentElite = elite.getFitness();
 	}
-	
-	protected abstract Genome addNewChromosome(int geneLength, AlgorithmEnum alg);
 
 	private boolean generationCount(){
 		boolean cont = true;

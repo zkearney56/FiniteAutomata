@@ -13,7 +13,7 @@ public class GenePopulation extends AbstractPopulation{
 	}
 
 	@Override
-	protected Genome addNewChromosome(int geneLength, AlgorithmEnum alg) {
+	public Genome generateGenome(int geneLength, AlgorithmEnum alg) {
 		return new GeneGenome(geneLength, alg);
 	}
 

@@ -1,5 +1,16 @@
 package geneticAlgorithm.Algorithm;
 
+/*
+ * Written by: Zachary Kearney
+ * Copyright by: Zachary Kearney, 2016
+ *
+ * Program: Algorithm.java
+ * Date: March 22, 2016
+ *
+ * Description: Static class used to calculate fitness of a genome.
+ * 
+ */
+
 public class Algorithm {
 	
 	public static byte[] SOLUTION = {1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,1,1,1,1,0,0,0,0
@@ -23,7 +34,11 @@ public class Algorithm {
 	public static void setGeneSolution(byte[] gene){
 		GENESOLUTION = gene;
 	}
-	
+	/**
+	 * Returns testSize of specified algorithm.
+	 * @param alg
+	 * @return
+	 */
 	public static int testSize(AlgorithmEnum alg){
 		switch(alg){
 		case BYTE_ALG1:{ 
@@ -62,7 +77,12 @@ public class Algorithm {
 		}
 		return 0;
 	}
-	
+	/**
+	 * Calculates fitness of genome for specified algorithm.
+	 * @param genome
+	 * @param alg
+	 * @return
+	 */
 	public static int calcFitness(byte[] genome, AlgorithmEnum alg){
 		switch(alg){
 		case BYTE_ALG1:{ //4bit
@@ -109,6 +129,22 @@ public class Algorithm {
 		return 0;
 	}
 	
+	/**
+	 * Returns unsigned int value of byte array.
+	 * @param genome
+	 * @return
+	 */
+	public static int intVal(byte[] genome) {
+		int value = 0;
+		for(int i = genome.length - 1, x = 0; i >= 0; i--, x++){
+			if(genome[i] == 1){
+			value += Math.pow(2, x);
+			}
+		}
+		// TODO Auto-generated method stub
+		return value;
+	}
+	
 	private static int bytealg1(int val){
 		int newVal = 0;
 		newVal = -(val * val) + 15 * val;
@@ -126,28 +162,20 @@ public class Algorithm {
 		newVal = -(val * val) + 4096 * val;
 		return newVal;
 	}
+	
 	private static int bytealg4(int val){
 		int newVal = 0;
 		newVal = -(val * val) + 65536 * val;
 		return newVal;
 	}
+	
+	
 	private static int bytealg5(int val){
 		int newVal = 0;
 		newVal = -(val * val) + 1048576 * val;
 		return newVal;
 	}
-	
-	public static int intVal(byte[] genome) {
-		int value = 0;
-		for(int i = genome.length - 1, x = 0; i >= 0; i--, x++){
-			if(genome[i] == 1){
-			value += Math.pow(2, x);
-			}
-		}
-		// TODO Auto-generated method stub
-		return value;
-	}
-	
+
 	private static int bytealg6(byte[] genome){
 		int newVal = 0;
 		for(int i = 0; i < SOLUTION.length; i++){
@@ -191,7 +219,12 @@ public class Algorithm {
 		}
 		return newVal;
 		}
-
+	/**
+	 * Returns string value of genome for specified algorithm.
+	 * @param genome
+	 * @param alg
+	 * @return
+	 */
 	public static String toString(byte[] genome, AlgorithmEnum alg){
 		switch(alg){
 		case BYTE_ALG1:
@@ -258,99 +291,4 @@ public class Algorithm {
 		return str;
 	}
 	
-	/**
-	private static int calcCharFitness(byte input, byte testval){
-		int fitness = 26;
-		if(input == testval){
-			return fitness;
-		}
-		int testIndex = 0;
-		for(int i = 0; i < CHARARRAY.length; i++){
-			if(CHARARRAY[i] == testval){
-				testIndex = i;
-			}
-		}
-		int distance = 0;
-		int xIndex = testIndex;
-		int yIndex = testIndex;
-		boolean matchFound = false;
-		while(!matchFound){
-			byte xTest = CHARARRAY[xIndex];
-			byte yTest = CHARARRAY[yIndex];
-			if(xTest == input || yTest == input){
-				matchFound = true;
-			}
-			else{
-				xIndex++;
-				if(xIndex >= CHARARRAY.length){
-					xIndex = 0;
-				}
-				yIndex --;
-				if(yIndex <= 0){
-					yIndex = CHARARRAY.length -1;
-				}
-				distance++;
-			}
-		}
-		fitness = fitness - distance;
-		return fitness * fitness;
-
-	}
-	*/
-	/**
-	public static byte crossChar(byte x, byte y){
-		if(x == y){
-			return x;
-		}
-		int xIndex = 0;
-		int yIndex = 0;
-		int xxIndex = 0;
-		int yyIndex = 0;
-		for(int i = 0; i < 26; i++){
-			if(CHARARRAY[i] == x){
-				xIndex = i;
-				xxIndex = i;
-			}
-			if(CHARARRAY[i] == y){
-				yIndex = i;
-				yyIndex = i;
-			}
-		}
-		boolean matchFound = false;
-		while(!matchFound){
-			if(xIndex == yIndex || yyIndex == xxIndex){
-				matchFound = true;
-			}
-			xIndex++;
-			if(xIndex >= CHARARRAY.length){
-				xIndex = 0;
-			}
-			xxIndex --;
-			if(xxIndex <= 0){
-				xxIndex = CHARARRAY.length - 1;
-			}
-			if(xIndex == yIndex || yyIndex == xxIndex){
-				matchFound = true;
-			}
-			yyIndex++;
-			if(yyIndex >= CHARARRAY.length){
-				yyIndex = 0;
-			}
-			yIndex --;
-			if(yIndex <= 0){
-				yIndex = CHARARRAY.length - 1;
-			}
-			if(xIndex == yIndex || yyIndex == xxIndex){
-				matchFound = true;
-			}
-		}
-		if(xIndex == yIndex){
-			return CHARARRAY[xIndex];
-		}
-		else{
-			return CHARARRAY[xxIndex];
-		}
-		
-	}
-	 */
 }

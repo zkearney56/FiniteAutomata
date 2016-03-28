@@ -1,4 +1,4 @@
-package fa;
+package fa.dfa;
 /*
  * Written by: Zachary Kearney
  * Copyright by: Zachary Kearney, 2016
@@ -12,6 +12,9 @@ package fa;
  */
 
 import java.util.concurrent.ConcurrentHashMap;
+
+import fa.FAState;
+import fa.FATranslation;
 
 public class DFATranslation implements FATranslation {
 

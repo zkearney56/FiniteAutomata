@@ -1,5 +1,16 @@
 package list;
 
+/*
+ * Written by: Zachary Kearney
+ * Copyright by: Zachary Kearney, 2016
+ *
+ * Program: RootNode.java
+ * Date: March 22, 2016
+ *
+ * Description: Implementation of a Root Node for a linked list.
+ * 
+ */
+
 class RootNode<E> extends Node<E>{
 
 		Node<E> link;

@@ -1,5 +1,16 @@
 package map;
 
+/*
+ * Written by: Zachary Kearney
+ * Copyright by: Zachary Kearney, 2016
+ *
+ * Program: HashMap.java
+ * Date: March 22, 2016
+ *
+ * Description: Implementation of a HashMap.
+ * 
+ */
+
 public class HashMap<K,V> implements Map<K, V>{
 
 	private Entry<K,V>[] table;

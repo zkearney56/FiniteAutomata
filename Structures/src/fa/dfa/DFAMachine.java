@@ -1,4 +1,6 @@
-package fa;
+package fa.dfa;
+
+import fa.FAState;
 
 /*
  * Written by: Zachary Kearney

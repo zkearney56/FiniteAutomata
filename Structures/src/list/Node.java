@@ -1,5 +1,17 @@
 package list;
 
+/*
+ * Written by: Zachary Kearney
+ * Copyright by: Zachary Kearney, 2016
+ *
+ * Program: Node.java
+ * Date: March 22, 2016
+ *
+ * Description: Abstract Node for a linked list.
+ * 
+ */
+
+
 public abstract class Node<E>{
 
 	protected Node<E> next;

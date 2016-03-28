@@ -1,5 +1,16 @@
 package geneticAlgorithm.Algorithm;
 
+/*
+ * Written by: Zachary Kearney
+ * Copyright by: Zachary Kearney, 2016
+ *
+ * Program: GeneticFunc.java
+ * Date: March 22, 2016
+ *
+ * Description: Static class containing methods for mutation, choosing random genomes, finding elite, and crossovers.
+ * 
+ */
+
 import java.util.Random;
 
 import geneticAlgorithm.Genome;
@@ -7,6 +18,11 @@ import geneticAlgorithm.Population;
 
 public class GeneticFunc {
 
+	/**
+	 * Mutates population. If mutcount < 1, Does not mutate anything. 
+	 * Else, mutates a random byte based on mutcoef and decrements mutcount until mutcount is less than 1.
+	 * @param pop
+	 */
 	public static void mutate(Population pop){
 		pop.incMutCount();
 		int x = 1;
@@ -19,7 +35,7 @@ public class GeneticFunc {
 
 	private static boolean mutateLoop(Population pop){
 			for(int i = 1; i < pop.size(); i++){
-				Genome mutChrom = pop.getChromosome(i);
+				Genome mutChrom = pop.getGenome(i);
 				if(!mutChrom.isElite()){
 					for(int y = 0; y < mutChrom.getSize(); y++){
 						if(Math.random() < pop.getMutCoef()){						
@@ -33,6 +49,12 @@ public class GeneticFunc {
 			return false;		
 		}
 		
+	/**
+	 * Chooses a random genome from the specified population.
+	 * The higher the fitness of the genome, the higher the probability of getting selected.
+	 * @param pop
+	 * @return
+	 */
 	public static Genome chooseRandom(Population pop){
 		
 		Random rand = new Random();
@@ -45,34 +67,41 @@ public class GeneticFunc {
 		int probIndex = 0;
 		while(true){
 			int randIndex = rand.nextInt(pop.size());
-			probIndex += pop.getChromosome(randIndex).getFitness();
+			probIndex += pop.getGenome(randIndex).getFitness();
 			if(probIndex >= prob){
-				return pop.getChromosome(randIndex);
+				return pop.getGenome(randIndex);
 			}
 		}
 	}
-	
+	/**
+	 * Finds the Genome with the highest fitness from a population.
+	 * @param pop
+	 * @return
+	 */
 	public static Genome findElite(Population pop){
 		Genome currElite = pop.getElite();
 		for(int i = 0; i < pop.size(); i++){
-			if(pop.getChromosome(i).getFitness() > currElite.getFitness()){
+			if(pop.getGenome(i).getFitness() > currElite.getFitness()){
 				currElite.setElite(false);
-				pop.setElite(pop.getChromosome(i));
+				pop.setElite(pop.getGenome(i));
 			}
 		
 		}
 		return currElite;
 	}
-	
+	/**
+	 * Performs crossover mating on a population.
+	 * @param pop
+	 */
 	public static void crossover(Population pop){
-		pop.setChromosome(pop.getElite(), 0);
+		pop.setGenome(pop.getElite(), 0);
 		for(int i = 1; i < pop.size(); i++){
 			boolean hasMated = false;
 			while(!hasMated){
 				Genome xx = chooseRandom(pop);
 				Genome yy = chooseRandom(pop);
 				if(newMate(xx,yy)){
-					pop.setChromosome(cross(xx,yy,pop.getCross()), i);
+					pop.setGenome(cross(xx,yy,pop.getCross()), i);
 					hasMated = true;
 				}
 			}
@@ -136,14 +165,6 @@ public class GeneticFunc {
 			}
 			break;
 		}
-		/**
-		case LETTER:{
-			for(int i = 0; i < size; i ++){
-				clone.setGene(i, Algorithm.crossChar(clone.getGene(i), y[i]));
-		}
-		break;
-		}
-		*/
 		default:
 			break;
 		}

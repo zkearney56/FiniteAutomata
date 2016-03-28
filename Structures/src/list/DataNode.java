@@ -1,5 +1,16 @@
 package list;
 
+/*
+ * Written by: Zachary Kearney
+ * Copyright by: Zachary Kearney, 2016
+ *
+ * Program: DataNode.java
+ * Date: March 22, 2016
+ *
+ * Description: Implementation of a Data Node for a linked list.
+ * 
+ */
+
 public class DataNode<E> extends Node<E>{
 
 	public DataNode(Node<E> link, Node<E> end, E e) {

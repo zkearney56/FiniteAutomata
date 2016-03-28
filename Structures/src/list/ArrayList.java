@@ -1,5 +1,16 @@
 package list;
 
+/*
+ * Written by: Zachary Kearney
+ * Copyright by: Zachary Kearney, 2016
+ *
+ * Program: ArrayList.java
+ * Date: March 22, 2016
+ *
+ * Description: Implementation of a custom ArrayList.
+ * 
+ */
+
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;

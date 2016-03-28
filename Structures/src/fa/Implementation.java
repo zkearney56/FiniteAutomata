@@ -12,8 +12,12 @@ package fa;
  */
 
 import java.util.Scanner;
-import fa.DFAMachine.L1;
-import fa.DFAMachine.L2;
+
+import fa.dfa.DFA;
+import fa.dfa.DFABoolOp;
+import fa.dfa.DFAMachine;
+import fa.dfa.DFAMachine.L1;
+import fa.dfa.DFAMachine.L2;
 
 public class Implementation implements Runnable{
 

@@ -1,5 +1,17 @@
 package geneticAlgorithm;
 
+/*
+ * Written by: Zachary Kearney
+ * Copyright by: Zachary Kearney, 2016
+ *
+ * Program: AbstractGenome.java
+ * Date: March 22, 2016
+ *
+ * Description: Abstract class for implementation of a Genome.
+ * 
+ */
+
+
 import java.util.Arrays;
 import java.util.Random;
 
@@ -36,6 +48,10 @@ public abstract class AbstractGenome implements Genome{
 	
 	public abstract Genome clone();
 	
+	public abstract byte mutateByte(byte b);
+	
+	public abstract byte randomByte();
+	
 	public final int getFitness(){
 		return fitness;
 	}
@@ -54,7 +70,6 @@ public abstract class AbstractGenome implements Genome{
 	}
 	
 	public final AlgorithmEnum getAlg() {
-		// TODO Auto-generated method stub
 		return alg;
 	}
 	
@@ -84,19 +99,15 @@ public abstract class AbstractGenome implements Genome{
 		}
 	}
 	
-	public void setGene(int index, byte dat){
+	public final void setGene(int index, byte dat){
 		genome[index] = dat;
 	}
-	
-	public abstract byte mutateByte(byte b);
-	
-	public abstract byte randomByte();
 	
 	public final void addMate(Genome mate){
 		mates.add(mate);
 	}
 	
-	public boolean hasMated(Genome mate){
+	public final boolean hasMated(Genome mate){
 		return mates.contains(mate);
 	}
 

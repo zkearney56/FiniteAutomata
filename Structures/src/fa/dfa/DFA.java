@@ -1,4 +1,4 @@
-package fa;
+package fa.dfa;
 
 /*
  * Written by: Zachary Kearney
@@ -13,6 +13,10 @@ package fa;
 
 import list.ArrayList;
 import java.util.Iterator;
+
+import fa.FA;
+import fa.FAState;
+import fa.InvalidInputException;
 
 public abstract class DFA implements FA {
 

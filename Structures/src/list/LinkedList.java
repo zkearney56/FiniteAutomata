@@ -1,5 +1,17 @@
 package list;
 
+/*
+ * Written by: Zachary Kearney
+ * Copyright by: Zachary Kearney, 2016
+ *
+ * Program: LinkedList.java
+ * Date: March 22, 2016
+ *
+ * Description: Implementation of a Singly Linked List.
+ * 
+ */
+
+
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 

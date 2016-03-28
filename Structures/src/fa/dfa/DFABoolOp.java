@@ -1,4 +1,4 @@
-package fa;
+package fa.dfa;
 
 /*
  * Written by: Zachary Kearney

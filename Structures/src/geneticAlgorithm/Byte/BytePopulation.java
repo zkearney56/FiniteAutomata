@@ -13,7 +13,7 @@ public class BytePopulation extends AbstractPopulation{
 	}
 
 	@Override
-	protected Genome addNewChromosome(int geneLength, AlgorithmEnum alg) {
+	public Genome generateGenome(int geneLength, AlgorithmEnum alg) {
 		return new ByteGenome(geneLength, alg);
 	}
 
