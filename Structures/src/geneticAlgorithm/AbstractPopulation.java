@@ -175,7 +175,7 @@ public abstract class AbstractPopulation implements Population {
 	private void newGeneration(){
 		
 		GeneticFunc.findElite(this);
-		printData();
+		//printData();
 		if(!generationCount()) return;
 		GeneticFunc.crossover(this);
 		GeneticFunc.mutate(this);

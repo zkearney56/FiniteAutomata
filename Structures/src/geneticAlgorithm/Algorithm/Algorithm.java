@@ -1,5 +1,7 @@
 package geneticAlgorithm.Algorithm;
 
+import java.util.Arrays;
+
 import geneticAlgorithm.Tower.TowerOfHanoi;
 
 /*
@@ -61,6 +63,9 @@ public class Algorithm {
 		case BYTE_ALG6: { //64 bit
 			return SOLUTION.length;
 		}
+		case BYTE_ALG7: { //16bit
+			return 16;
+		}
 		case LET_ALG1: { //14bit
 			return LETTERSOLUTION.length;
 		}
@@ -115,6 +120,9 @@ public class Algorithm {
 		case BYTE_ALG6: { //64 bit
 			return new Fitness(bytealg6(genome));
 		}
+		case BYTE_ALG7: {
+			return new Fitness(bytealg7(genome));
+		}
 		case LET_ALG1: { //14bit
 			return new Fitness(letalg1(genome));
 		}
@@ -156,6 +164,8 @@ public class Algorithm {
 		return value;
 	}
 	
+	
+	
 	private static int bytealg1(int val){
 		int newVal = 0;
 		newVal = -(val * val) + 15 * val;
@@ -195,6 +205,43 @@ public class Algorithm {
 			}
 		}
 		return newVal;
+	}
+	
+	public static int bytealg7(byte[]genome){
+		int x1 = intVal(Arrays.copyOfRange(genome, 0, 4));
+		int x2 = intVal(Arrays.copyOfRange(genome, 4, 8));
+		int x3 = intVal(Arrays.copyOfRange(genome, 8, 12));
+		int x4 = intVal(Arrays.copyOfRange(genome, 12, 16));
+		int fitness = 1;
+		if(4 * x1 + 3 * x2 + 2 * x3 + x4 == 10){
+			fitness ++;
+		}
+		if(3 * x1 + 2*x2+x3+4*x4 == 6){
+			fitness ++;
+		}
+		if(2 * x1 + x2 + 4 * x3 + 3 * x4 == 14){
+			fitness ++;
+		}
+		if(x1 + 4 * x2 + 3 * x3 + 2 * x4 == 10){
+			fitness ++;
+		}
+		return fitness;
+		/**
+		tot += 4 * x1 + 3 * x2 + 2 * x3 + x4 - 10; //10
+		tot += 3 * x1 + 2*x2+x3+4*x4 - 6; //9
+		tot += 2 * x1 + x2 + 4 * x3 + 3 * x4 - 14; //14
+		tot += x1 + 4 * x2 + 3 * x3 + 2 * x4 - 10; //10
+		
+		if(tot < 0){
+			tot = -tot;
+		}
+		if(tot == 0){
+			return 100000;
+		}
+		else{
+			return 1000/tot;
+		}
+		*/
 	}
 	
 	private static int letalg1(byte[] genome){
@@ -250,6 +297,8 @@ public class Algorithm {
 			return byteString(genome);
 		case BYTE_ALG6:
 			return byteString(genome) + "\n" + byteString(SOLUTION);
+		case BYTE_ALG7:
+			return intValString(genome);
 		case LET_ALG1:
 			return charString(genome);
 		case LET_ALG2:
@@ -304,6 +353,14 @@ public class Algorithm {
 		String str = "";
 		for(int i = 0; i < genome.length; i++){
 			str += (int)genome[i];
+		}
+		return str;
+	}
+	
+	private static String intValString(byte[] genome){
+		String str = "";
+		for(int i = 0; i < genome.length - 3; i = i + 4){
+			str += intVal(Arrays.copyOfRange(genome, i, i+4)) + " ";
 		}
 		return str;
 	}

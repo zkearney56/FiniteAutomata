@@ -124,11 +124,6 @@ public abstract class AbstractGenome implements Genome{
 		}
 	}
 	
-	public final void adjustGenome(byte[] newGenome){
-		this.size = newGenome.length;
-		genome = Arrays.copyOf(newGenome, newGenome.length);
-	}
-	
 	public final boolean adjustFlag(){
 		return fitnessobj.adjustSize();
 	}
