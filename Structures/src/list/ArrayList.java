@@ -27,13 +27,18 @@ public class ArrayList<E> implements List<E>, Iterable<E>{
 		size = 0;
 	}
 	
-	public ArrayList(Object[] data){
+	public ArrayList(E[] data){
 		elementData = data;
 		size = elementData.length;
 	}
 	
 	public ArrayList(int capacity){
 		elementData = new Object[capacity];
+	}
+	
+	public ArrayList(ArrayList<E> clone){
+		elementData = Arrays.copyOf(clone.elementData, clone.elementData.length);
+		size = clone.size;
 	}
 	
 	public void reStructure(){
