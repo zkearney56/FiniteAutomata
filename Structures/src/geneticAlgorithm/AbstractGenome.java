@@ -17,20 +17,23 @@ import java.util.Random;
 
 import geneticAlgorithm.Algorithm.Algorithm;
 import geneticAlgorithm.Algorithm.AlgorithmEnum;
+import geneticAlgorithm.Algorithm.Fitness;
 import list.ArrayList;
 
 public abstract class AbstractGenome implements Genome{
 
-	private int size = 0;
+	protected int size = 0;
 	private AlgorithmEnum alg = AlgorithmEnum.BYTE_ALG1;
-	private byte[] genome;
+	protected byte[] genome;
 	private ArrayList<Genome> mates;
+	private Fitness fitnessobj;
 	private int fitness = 0;
 	private boolean isElite = false;
 	
 	public AbstractGenome(int size, AlgorithmEnum alg){
 		this.size = size;
 		this.alg = alg;
+		fitnessobj = new Fitness(0,false, new byte[] {});
 		genome = new byte[size];
 		mates = new ArrayList<Genome>();
 		randomize();
@@ -41,6 +44,7 @@ public abstract class AbstractGenome implements Genome{
 		this.size = x.getSize();
 		this.alg = x.getAlg();
 		this.fitness = x.getFitness();
+		fitnessobj = new Fitness(fitness, false, new byte[] {});
 		isElite = false;
 		this.genome = Arrays.copyOf(x.getGenome(), size);
 		mates = new ArrayList<Genome>();
@@ -66,7 +70,8 @@ public abstract class AbstractGenome implements Genome{
 	}
 	
 	public final void testFitness(){
-		fitness = Algorithm.calcFitness(genome, alg);
+		fitnessobj = Algorithm.calcFitness(genome, alg);
+		fitness = fitnessobj.getFitness();
 	}
 	
 	public final AlgorithmEnum getAlg() {
@@ -93,7 +98,7 @@ public abstract class AbstractGenome implements Genome{
 		return isElite;
 	}
 	
-	public final void randomize() {
+	public void randomize() {
 		for(int i = 0; i < size; i++){
 			genome[i] = randomByte();
 		}
@@ -111,4 +116,24 @@ public abstract class AbstractGenome implements Genome{
 		return mates.contains(mate);
 	}
 
+	public final void adjustSize(int size){
+		this.size = size;
+		genome = Arrays.copyOf(fitnessobj.newByte(), size);	
+		for(int i = fitnessobj.newByte().length; i < size; i++){
+			genome[i] = randomByte();
+		}
+	}
+	
+	public final void adjustGenome(byte[] newGenome){
+		this.size = newGenome.length;
+		genome = Arrays.copyOf(newGenome, newGenome.length);
+	}
+	
+	public final boolean adjustFlag(){
+		return fitnessobj.adjustSize();
+	}
+	
+	public final int adjustSize(){
+		return fitnessobj.newByte.length;
+	}
 }

@@ -93,5 +93,14 @@ public interface Genome extends Cloneable{
 	 * @return
 	 */
 	public byte randomByte();
+	/**
+	 * Method to adjust size of genome.
+	 * @param size
+	 */
+	public void adjustSize(int size);
+	
+	public boolean adjustFlag();
+	
+	public int adjustSize();
 	
 }

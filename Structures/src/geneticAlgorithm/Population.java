@@ -124,5 +124,17 @@ public interface Population {
 	 * @return
 	 */
 	Genome generateGenome(int geneLength, AlgorithmEnum alg);
+	
+	/**
+	 * Adjusts genomeLength for population.
+	 * @param geneLength
+	 */
+	public void setGeneLength(int geneLength);
+	
+	/**
+	 * Returns current geneLength.
+	 * @return
+	 */
+	public int getGeneLength();
 
 }

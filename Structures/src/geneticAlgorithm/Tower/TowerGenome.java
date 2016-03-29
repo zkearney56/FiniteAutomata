@@ -1,11 +1,14 @@
 package geneticAlgorithm.Tower;
 
+import java.util.Random;
+
 import geneticAlgorithm.AbstractGenome;
 import geneticAlgorithm.Genome;
 import geneticAlgorithm.Algorithm.AlgorithmEnum;
 
 public class TowerGenome extends AbstractGenome implements Genome{
 
+	private Random rand;
 	public TowerGenome(Genome x) {
 		super(x);
 		// TODO Auto-generated constructor stub
@@ -22,46 +25,20 @@ public class TowerGenome extends AbstractGenome implements Genome{
 
 	@Override
 	public byte mutateByte(byte b) {
-		double rand = Math.random();
-		if(b == 1){
-			if(rand < .5){
-				return 2;
-			}
-			else{
-				return 3;
-			}
-		}
-		else if(b == 2){
-			if(rand < .5){
-				return 1;
-			}
-			else{
-				return 3;
-			}
-		}
-		else{
-			if(rand < .5){
-				return 1;
-			}
-			else{
-				return 2;
+		rand = new Random();
+		while(true){
+			int next = rand.nextInt(6);
+			if(next != b){
+				return (byte)next;
 			}
 		}
 	}
-
+	
 	@Override
 	public byte randomByte() {
-		double rand = Math.random();
-		if(rand < .33){
-			return 1;
-		}
-		else if(rand < .66){
-			return 2;
-		}
-		else{
-			return 3;
-		}
-
+		rand = new Random();
+		int next = rand.nextInt(6);
+		return (byte) next;
 	}
 
 }

@@ -9,14 +9,13 @@ import geneticAlgorithm.Tower.TowerPopulation;
 
 public class Test {
 
-	public static void main(String args[]){
+	public static void main(String args[]){	
 		
-		Algorithm.setLetterSolution("cccccccc");
-		AlgorithmEnum alg = AlgorithmEnum.TOWER_ALG;
-		Population testPop = new TowerPopulation(20, Algorithm.testSize(alg), alg, CrossoverEnum.SPLIT);
+		AlgorithmEnum alg = AlgorithmEnum.TOWER_ALG2;
+		Population testPop = new TowerPopulation(5, Algorithm.testSize(alg), alg, CrossoverEnum.SPLIT_4);
 		testPop.setMutCoef(.015);
 		testPop.setMaxFit(200);
-		testPop.setMaxGen(25000);
+		testPop.setMaxGen(1000);
 		testPop.execute();
 		
 	}

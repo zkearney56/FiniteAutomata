@@ -96,6 +96,14 @@ public abstract class AbstractPopulation implements Population {
 	public final void setGenome(Genome e, int index){
 		pop.set(e, index);
 	}
+	
+	public final int getGeneLength(){
+		return geneLength;
+	}
+	
+	public final void setGeneLength(int geneLength){
+		this.geneLength = geneLength;
+	}
 
 	@Override
 	public final void execute(){
@@ -171,6 +179,7 @@ public abstract class AbstractPopulation implements Population {
 		if(!generationCount()) return;
 		GeneticFunc.crossover(this);
 		GeneticFunc.mutate(this);
+		GeneticFunc.adjustGenomeLength(this);
 		generation++;
 		
 	}
@@ -189,6 +198,5 @@ public abstract class AbstractPopulation implements Population {
 		System.out.println("VALUE: " + Algorithm.intVal(elite.getGenome()));
 		System.out.println(elite.toString());
 	}
-	
 	
 }

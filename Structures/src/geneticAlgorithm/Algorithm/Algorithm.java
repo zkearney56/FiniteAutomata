@@ -74,7 +74,9 @@ public class Algorithm {
 			return GENESOLUTION.length;
 		case GENE_ALG2:
 			break;
-		case TOWER_ALG:
+		case TOWER_ALG1:
+			return 256;
+		case TOWER_ALG2:
 			return 512;
 		default:
 			break;
@@ -87,34 +89,34 @@ public class Algorithm {
 	 * @param alg
 	 * @return
 	 */
-	public static int calcFitness(byte[] genome, AlgorithmEnum alg){
+	public static Fitness calcFitness(byte[] genome, AlgorithmEnum alg){
 		switch(alg){
 		case BYTE_ALG1:{ //4bit
 			int val = intVal(genome);
-			return bytealg1(val); //7|8
+			return new Fitness(bytealg1(val));
 			//-x^2 + 15x
 		}
 		case BYTE_ALG2: { //8bit
 			int val = intVal(genome);
-			return bytealg2(val); //255
+			return new Fitness(bytealg2(val));
 		}
 		case BYTE_ALG3: { //12bit
 			int val = intVal(genome);
-			return bytealg3(val); // 2047
+			return new Fitness(bytealg3(val));
 		}
 		case BYTE_ALG4: { //16 bit
 			int val = intVal(genome);
-			return bytealg4(val); // 32767
+			return new Fitness(bytealg4(val));
 		}
 		case BYTE_ALG5: { //20 bit
 			int val = intVal(genome);
-			return bytealg5(val);
+			return new Fitness(bytealg5(val));
 		}
 		case BYTE_ALG6: { //64 bit
-			return bytealg6(genome);
+			return new Fitness(bytealg6(genome));
 		}
 		case LET_ALG1: { //14bit
-			return letalg1(genome);
+			return new Fitness(letalg1(genome));
 		}
 		case LET_ALG2:{
 			//return letalg2(genome);
@@ -124,16 +126,18 @@ public class Algorithm {
 			break;
 		}
 		case GENE_ALG1:
-			return genealg1(genome);
+			return new Fitness(genealg1(genome));
 		case GENE_ALG2:
 			break;
-		case TOWER_ALG:
-			TowerOfHanoi tower = new TowerOfHanoi(7);
+		case TOWER_ALG1:
+			TowerOfHanoi tower = new TowerOfHanoi(3);
 			return tower.test(genome);
+		case TOWER_ALG2: TowerOfHanoi tower2 = new TowerOfHanoi(5);
+			return tower2.test(genome);
 		default:
-			break;
+			return null;
 		}
-		return 0;
+		return null;
 	}
 	
 	/**
@@ -257,6 +261,20 @@ public class Algorithm {
 			String sol2 = geneString(GENESOLUTION);
 			sol1 += "\n" + sol2;
 			return sol1;
+		case TOWER_ALG1:
+			String str = "";
+			TowerOfHanoi tower = new TowerOfHanoi(3);
+			tower.test(genome);
+			str += byteString(genome);
+			str += "\n" + tower.toString();
+			return str;
+		case TOWER_ALG2:
+			String str2 = "";
+			TowerOfHanoi tower2 = new TowerOfHanoi(5);
+			tower2.test(genome);
+			str2 += byteString(genome);
+			str2 += "\n" + tower2.toString();
+			return str2;
 		default:
 			return byteString(genome);
 		

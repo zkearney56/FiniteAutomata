@@ -165,10 +165,72 @@ public class GeneticFunc {
 			}
 			break;
 		}
+		case SPLIT_4:{
+			boolean switchBool = true;
+			int x = 0;
+			for(int i = 0; i < size; i++){
+				if(x == 4){
+					switchBool = !switchBool;
+					x=0;
+				}
+				if(switchBool){
+					clone.setGene(i, y[i]);
+					x++;
+				}
+				else{
+					x++;
+				}
+			}
+			break;
+		}
+		case RANDOM:{
+			if(Math.random() < .5){
+				clone.setGene(0, y[0]);
+			}
+			if(Math.random() < .5){
+				clone.setGene(1, y[1]);
+			}
+			for(int i = 2; i < size; i ++){
+				double rand = Math.random();
+				if(rand < .2){
+					clone.setGene(i, y[i-2]);
+				}
+				else if(rand < .35){
+					clone.setGene(i, y[i-1]);
+				}
+				else if(rand < .5){
+					clone.setGene(i, y[i]);
+				}
+			}
+			break;
+		}
 		default:
 			break;
 		}
 		clone.testFitness();
 		return clone;		
+	}
+	
+	public static void adjustGenomeLength(Population pop){
+		boolean adjust = false;
+		int newSize = pop.getGeneLength();
+		int maxFit = 0;
+		for(int i = 0; i < pop.size(); i++){
+			Genome currGene = pop.getGenome(i);
+			if(currGene.adjustFlag()){
+				if(maxFit < currGene.getFitness()){
+					maxFit = currGene.getFitness();
+					adjust = true;
+					newSize = currGene.adjustSize();	
+				}
+			}
+		}
+		if(adjust){
+			pop.setGeneLength(newSize);
+			for(int i = 0; i < pop.size(); i++){
+				pop.getGenome(i).adjustSize(newSize);
+			}
+		}
+
 	}
 }
