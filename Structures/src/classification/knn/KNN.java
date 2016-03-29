@@ -1,6 +1,6 @@
-package csv.knn;
+package classification.knn;
 
-import csv.DataRow;
+import dataset.DataRow;
 
 public class KNN {
 

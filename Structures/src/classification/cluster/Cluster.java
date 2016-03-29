@@ -1,6 +1,6 @@
-package csv.cluster;
+package classification.cluster;
 
-import csv.DataRow;
+import dataset.DataRow;
 import list.ArrayList;
 
 public class Cluster {

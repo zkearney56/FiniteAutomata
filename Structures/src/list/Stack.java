@@ -18,13 +18,13 @@ import java.util.NoSuchElementException;
 
 public class Stack<E> implements StackInterface<E>{
 	
-	private int size = -1;
+	private int size = 0;
 	private static final int INITIAL_CAPACITY = 10;
 	private Object[] elementData = {};
 	
 	public Stack(){
 		elementData = new Object[INITIAL_CAPACITY];
-		size = -1;
+		size = 0;
 	}
 	
 	public Stack(Object[] data){
@@ -59,7 +59,7 @@ public class Stack<E> implements StackInterface<E>{
 
 	@Override
 	public boolean isEmpty() {
-		if(size == -1){
+		if(size == 0){
 			return true;
 		}
 		else{
@@ -69,7 +69,7 @@ public class Stack<E> implements StackInterface<E>{
 
 	@Override
 	public int count() {
-		return size+1;
+		return size;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -84,7 +84,8 @@ public class Stack<E> implements StackInterface<E>{
 		if (size == elementData.length) {
 			increaseCapacity();
 		}
-		elementData[size++] = e;
+		elementData[size] = e;
+		size++;
 	}
 	
 	private void increaseCapacity(){

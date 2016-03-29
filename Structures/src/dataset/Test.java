@@ -1,4 +1,4 @@
-package csv;
+package dataset;
 
 import java.io.File;
 import java.time.LocalTime;
@@ -6,8 +6,8 @@ import java.time.LocalTime;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import csv.cluster.ClusterSet;
-import csv.knn.KNNSet;
+import classification.cluster.ClusterSet;
+import classification.knn.KNNSet;
 import list.ArrayList;
 import math.MathFunctions;
 

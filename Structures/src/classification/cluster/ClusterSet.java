@@ -1,10 +1,10 @@
-package csv.cluster;
+package classification.cluster;
 
 import java.util.Iterator;
 
-import csv.DataRow;
-import csv.DataSet;
-import csv.TrainingSet;
+import dataset.DataRow;
+import dataset.DataSet;
+import dataset.TrainingSet;
 import list.ArrayList;
 
 public class ClusterSet extends TrainingSet{

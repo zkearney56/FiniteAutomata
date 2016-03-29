@@ -1,9 +1,9 @@
-package csv.knn;
+package classification.knn;
 
-import csv.DataRow;
-import csv.DataSet;
+import dataset.DataRow;
+import dataset.DataSet;
+import dataset.TrainingSet;
 import list.ArrayList;
-import csv.TrainingSet;
 
 public class KNNSet extends TrainingSet{
 

@@ -1,5 +1,7 @@
 package geneticAlgorithm.Algorithm;
 
+import geneticAlgorithm.Tower.TowerOfHanoi;
+
 /*
  * Written by: Zachary Kearney
  * Copyright by: Zachary Kearney, 2016
@@ -72,6 +74,8 @@ public class Algorithm {
 			return GENESOLUTION.length;
 		case GENE_ALG2:
 			break;
+		case TOWER_ALG:
+			return 512;
 		default:
 			break;
 		}
@@ -123,6 +127,9 @@ public class Algorithm {
 			return genealg1(genome);
 		case GENE_ALG2:
 			break;
+		case TOWER_ALG:
+			TowerOfHanoi tower = new TowerOfHanoi(7);
+			return tower.test(genome);
 		default:
 			break;
 		}
