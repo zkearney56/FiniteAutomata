@@ -23,9 +23,12 @@ public class GeneGenome extends AbstractGenome implements Genome{
 	@Override
 	public byte mutateByte(byte b) {
 		double rand = Math.random();
-		if(b == 0){
-			if(rand < .5){
+		if(b == 00){
+			if(rand < .33){
 				return (byte) 01;
+			}
+			else if(rand < .66){
+				return (byte) 11;
 			}
 			else{
 				return (byte) 10;
@@ -52,8 +55,11 @@ public class GeneGenome extends AbstractGenome implements Genome{
 			else return (byte) 00;
 		}
 		else if(b == 11){
-			if(Math.random() < .5){
+			if(rand < .33){
 				return (byte) 01;
+			}
+			else if(rand < .66){
+				return (byte) 00;
 			}
 			else{
 				return (byte) 10;

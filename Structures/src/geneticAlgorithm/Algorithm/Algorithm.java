@@ -25,7 +25,7 @@ public class Algorithm {
 	
 	public static byte[] LETTERSOLUTION = {'z','a','c','h','a','r','y','k','e','a','r','n','e','y'};
 
-	public static byte[] GENESOLUTION = {01,11,11,00,11,01,10,10,01,11,00,11,10,01,11,01,11,01};
+	public static byte[] GENESOLUTION = {01,11,11,00,11,01,10,10,01,11,00,11,10,01,11,01};
 	
 	public static byte[] CHARARRAY = {'a','b','c','d','e','f','g','h','i','j','k','l','m',
 			'n','o','p','q','r','s','t','u','v','w','x','y','z'};
@@ -190,7 +190,6 @@ public class Algorithm {
 		return newVal;
 	}
 	
-	
 	private static int bytealg5(int val){
 		int newVal = 0;
 		newVal = -(val * val) + 1048576 * val;
@@ -253,15 +252,6 @@ public class Algorithm {
 		}
 		return newVal;
 	}
-	/**
-	private static int letalg2(byte[] genome){
-		int newVal = 0;
-		for(int i = 0; i < LETTERSOLUTION.length; i++){
-			newVal += calcCharFitness(genome[i], LETTERSOLUTION[i]);
-		}
-		return newVal;
-	}
-	*/
 	
 	private static int genealg1(byte [] genome){
 		int newVal = 0;
@@ -269,10 +259,13 @@ public class Algorithm {
 			byte val = genome[i];
 			byte testVal = GENESOLUTION[i];
 			if (val == testVal){
-				newVal += 4;
+				newVal += 2;
 			}
 			else if ((val == 01 || val == 10) && (testVal == 00 || testVal == 11)){
-				newVal += 2;
+				newVal += 1;
+			}
+			else if((val == 00 || val == 11) && (testVal == 01 || testVal == 10)){
+				newVal +=1;
 			}
 		}
 		return newVal;
