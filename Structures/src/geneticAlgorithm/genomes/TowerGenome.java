@@ -1,4 +1,4 @@
-package geneticAlgorithm.Tower;
+package geneticAlgorithm.genomes;
 
 import java.util.Random;
 

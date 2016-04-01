@@ -2,8 +2,6 @@ package geneticAlgorithm.Algorithm;
 
 import java.util.Arrays;
 
-import geneticAlgorithm.Tower.TowerOfHanoi;
-
 /*
  * Written by: Zachary Kearney
  * Copyright by: Zachary Kearney, 2016
@@ -17,29 +15,24 @@ import geneticAlgorithm.Tower.TowerOfHanoi;
 
 public class Algorithm {
 	
-	private static int TOWER_DISKS = 3;
-	
-	private static double TOWER_FITNESS = 128;
-	
+	public static int TOWER_DISKS = 3;	
+	public static double TOWER_FITNESS = 128;
 	public static byte[] SOLUTION = {1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,1,1,1,1,0,0,0,0
 											,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,
 											1,1,1,1,0,0,0,0,1,1,1,1,0,0,0,0,1,1,1,1,0,0,0,0,1,1,1,1,0,0,0,0,
 											1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0
 											};
-	
 	public static byte[] LETTERSOLUTION = {'z','a','c','h','a','r','y','k','e','a','r','n','e','y'};
-
 	public static byte[] GENESOLUTION = {01,11,11,00,11,01,10,10,01,11,00,11,10,01,11,01};
-	
 	public static byte[] CHARARRAY = {'a','b','c','d','e','f','g','h','i','j','k','l','m',
-			'n','o','p','q','r','s','t','u','v','w','x','y','z'};
-	
+			'n','o','p','q','r','s','t','u','v','w','x','y','z'};	
 	
 	public static void setTowerCount(int count){
 		TOWER_DISKS = count;
 		int returnVal = (int)Math.pow(2, TOWER_DISKS);
 		TOWER_FITNESS =  (Math.pow(returnVal, 2)/(Math.sqrt(Math.pow(0, 2)) + 1))+ Math.pow(returnVal, 2);
 	}
+	
 	public static void setLetterSolution(String input){
 		LETTERSOLUTION = input.getBytes();
 	}
@@ -78,20 +71,10 @@ public class Algorithm {
 		case LET_ALG1: { //14bit
 			return LETTERSOLUTION.length;
 		}
-		case LET_ALG2:{
-			return LETTERSOLUTION.length;
-		}
-		case LET_ALG3: {
-			break;
-		}
 		case GENE_ALG1:
 			return GENESOLUTION.length;
-		case GENE_ALG2:
-			break;
 		case TOWER_ALG1: 
-			return 4000;
-		case TOWER_ALG2:
-			return 4096;
+			return (int) TOWER_FITNESS;
 		default:
 			break;
 		}
@@ -135,30 +118,73 @@ public class Algorithm {
 		case LET_ALG1: { //14bit
 			return new Fitness(letalg1(genome));
 		}
-		case LET_ALG2:{
-			//return letalg2(genome);
-			break;
-		}
-		case LET_ALG3: {
-			break;
-		}
 		case GENE_ALG1:
 			return new Fitness(genealg1(genome));
-		case GENE_ALG2:
-			break;
 		case TOWER_ALG1:
 			TowerOfHanoi tower = new TowerOfHanoi(TOWER_DISKS);
 			return tower.test(genome);
-			//TowerOfHanoi tower = new TowerOfHanoi(TOWER_DISKS, genome);
-			//new Thread(tower).start();
-			//return tower.getFit();
-		case TOWER_ALG2: //TowerOfHanoi tower2 = new TowerOfHanoi(5);
-			//return tower2.test(genome);
-			return null;
 		default:
 			return null;
 		}
-		return null;
+	}
+	
+	public static double getMaxFitness(AlgorithmEnum alg) {
+		switch(alg){
+		case BYTE_ALG1: return 56;
+		case BYTE_ALG2: return 65536;
+		case BYTE_ALG3: return 4194304;
+		case BYTE_ALG4: return 1073741824;
+		case BYTE_ALG5: break;
+		case BYTE_ALG6: return SOLUTION.length;
+		case BYTE_ALG7: return 5;
+		case GENE_ALG1: return GENESOLUTION.length * 2;
+		case LET_ALG1: return LETTERSOLUTION.length;
+		case TOWER_ALG1:
+			return TOWER_FITNESS;
+		default:
+			break;
+		
+		}
+		return 0;
+	}
+	
+	public static String toString(byte[] genome, AlgorithmEnum alg){
+		switch(alg){
+		case BYTE_ALG1:
+			return byteString(genome);
+		case BYTE_ALG2:
+			return byteString(genome);
+		case BYTE_ALG3:
+			return byteString(genome);
+		case BYTE_ALG4:
+			return byteString(genome);
+		case BYTE_ALG5:
+			return byteString(genome);
+		case BYTE_ALG6:
+			return byteString(genome) + "\n" + byteString(SOLUTION);
+		case BYTE_ALG7:
+			return intValString(genome);
+		case LET_ALG1:
+			return charString(genome);
+		case GENE_ALG1:
+			String sol1 = geneString(genome);
+			String sol2 = geneString(GENESOLUTION);
+			sol1 += "\n" + sol2 + "\nMAXFIT: " + GENESOLUTION.length*2;
+			return sol1;
+		case TOWER_ALG1:
+			String str = "";
+			TowerOfHanoi tower = new TowerOfHanoi(TOWER_DISKS);
+			Fitness fit =  tower.test(genome);
+			//TowerOfHanoi tower = new TowerOfHanoi(TOWER_DISKS, genome);
+			//new Thread(tower).start();
+			//Fitness fit = tower.getFit();
+			str += byteString(genome);
+			str += "\n" + tower.toString();
+			return str;
+		default:
+			return byteString(genome);
+		
+		}
 	}
 	
 	/**
@@ -166,18 +192,15 @@ public class Algorithm {
 	 * @param genome
 	 * @return
 	 */
-	public static int intVal(byte[] genome) {
+	private static int intVal(byte[] genome) {
 		int value = 0;
 		for(int i = genome.length - 1, x = 0; i >= 0; i--, x++){
 			if(genome[i] == 1){
 			value += Math.pow(2, x);
 			}
 		}
-		// TODO Auto-generated method stub
 		return value;
 	}
-	
-	
 	
 	private static double bytealg1(int val){ //56
 		double newVal = 0;
@@ -219,7 +242,7 @@ public class Algorithm {
 		return newVal;
 	}
 	
-	public static double bytealg7(byte[]genome){ //5
+	private static double bytealg7(byte[]genome){ //5
 		double x1 = intVal(Arrays.copyOfRange(genome, 0, 4));
 		double x2 = intVal(Arrays.copyOfRange(genome, 4, 8));
 		double x3 = intVal(Arrays.copyOfRange(genome, 8, 12));
@@ -283,61 +306,6 @@ public class Algorithm {
 		}
 		return newVal;
 		}
-	/**
-	 * Returns string value of genome for specified algorithm.
-	 * @param genome
-	 * @param alg
-	 * @return
-	 */
-	public static String toString(byte[] genome, AlgorithmEnum alg){
-		switch(alg){
-		case BYTE_ALG1:
-			return byteString(genome);
-		case BYTE_ALG2:
-			return byteString(genome);
-		case BYTE_ALG3:
-			return byteString(genome);
-		case BYTE_ALG4:
-			return byteString(genome);
-		case BYTE_ALG5:
-			return byteString(genome);
-		case BYTE_ALG6:
-			return byteString(genome) + "\n" + byteString(SOLUTION);
-		case BYTE_ALG7:
-			return intValString(genome);
-		case LET_ALG1:
-			return charString(genome);
-		case LET_ALG2:
-			return charString(genome);
-		case LET_ALG3:
-			return charString(genome);
-		case GENE_ALG1:
-			String sol1 = geneString(genome);
-			String sol2 = geneString(GENESOLUTION);
-			sol1 += "\n" + sol2 + "\nMAXFIT: " + GENESOLUTION.length*2;
-			return sol1;
-		case TOWER_ALG1:
-			String str = "";
-			TowerOfHanoi tower = new TowerOfHanoi(TOWER_DISKS);
-			Fitness fit =  tower.test(genome);
-			//TowerOfHanoi tower = new TowerOfHanoi(TOWER_DISKS, genome);
-			//new Thread(tower).start();
-			//Fitness fit = tower.getFit();
-			str += byteString(genome);
-			str += "\n" + tower.toString();
-			return str;
-		case TOWER_ALG2:
-			//String str2 = "";
-			//TowerOfHanoi tower2 = new TowerOfHanoi(5);
-			//tower2.test(genome);
-			String str2 = byteString(genome);
-			//str2 += "\n" + tower2.toString();
-			return str2;
-		default:
-			return byteString(genome);
-		
-		}
-	}
 	
 	private static String geneString(byte[] genome){
 		String str = "";
@@ -380,46 +348,6 @@ public class Algorithm {
 			str += (char)genome[i];
 		}
 		return str;
-	}
-	
-	/**
-	 * 56
-	 * 65536
-	 * 4194304
-	 * 1073741824
-	 * 274877906944
-	 * SOLUTION.LENGTH
-	 * 5
-	 * LETTERSOLUTION.LENGTH
-	 * GENESOL*2
-	 * 
-	 * @param val
-	 * @return
-	 */
-
-	public static double getMaxFitness(AlgorithmEnum alg) {
-		switch(alg){
-		case BYTE_ALG1: return 56;
-		case BYTE_ALG2: return 65536;
-		case BYTE_ALG3: return 4194304;
-		case BYTE_ALG4: return 1073741824;
-		case BYTE_ALG5: break;
-		case BYTE_ALG6: return SOLUTION.length;
-		case BYTE_ALG7: return 5;
-		case GENE_ALG1: return GENESOLUTION.length * 2;
-		case GENE_ALG2: break;
-		case LET_ALG1: return LETTERSOLUTION.length;
-		case LET_ALG2: break;
-		case LET_ALG3: break;
-		case TOWER_ALG1:
-			return TOWER_FITNESS;
-		case TOWER_ALG2: 
-			return (int) Math.pow(3, 3) * TowerOfHanoi.minNumMoves(3);
-		default:
-			break;
-		
-		}
-		return 0;
 	}
 	
 }

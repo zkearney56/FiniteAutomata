@@ -72,7 +72,25 @@ public interface Population {
 	 * @param index
 	 */
 	void setGenome(Genome e, int index);
-
+	
+	/**
+	 * Adds a genome to a population.
+	 * @param e
+	 */
+	void addGenome(Genome e);
+	
+	/**
+	 * Adds a genome at the specific index.
+	 * @param e
+	 * @param index
+	 */
+	void addGenome(Genome e, int index);
+	/**
+	 * Remove the genome at a given index.
+	 * @param index
+	 * @return
+	 */
+	Genome removeGenome(int index);
 	/**
 	 * Executes the genetic algorithm.
 	 */
@@ -90,6 +108,11 @@ public interface Population {
 	 */
 	void setElite(Genome elite);
 	
+	/**
+	 * Sets the current maximum fitness;
+	 * @param fit
+	 */
+	void setCurrentMaxFit(double fit);
 	/**
 	 * Increments mutation counter.
 	 */
@@ -110,13 +133,6 @@ public interface Population {
 	 * Returns all elite genomes.
 	 */
 	public ArrayList<Genome> getAllElite();
-	/**
-	 * Returns a new Genome with specified geneLength and algorithm.
-	 * @param geneLength
-	 * @param alg
-	 * @return
-	 */
-	Genome generateGenome(int geneLength, AlgorithmEnum alg);
 	
 	/**
 	 * Adjusts genomeLength for population.
@@ -141,4 +157,33 @@ public interface Population {
 	 * @return
 	 */
 	public int getEliteCount();
+	
+	/**
+	 * Returns the final generation count.
+	 * @return
+	 */
+	public int getGeneration();
+	
+	/**
+	 * Returns the total runtime for this population.
+	 * @return
+	 */
+	public double getRunTime();
+	
+	/**
+	 * Returns the average runtime for each generation.
+	 * @return
+	 */
+	public double getAvgRunTime();
+	
+	/**
+	 * Returns the fitness of the elite genome.
+	 * @return
+	 */
+	public double getEliteFitness();
+	
+	/**
+	 * Adds elite to elite population;
+	 */
+	public void addElite(Genome e);
 }

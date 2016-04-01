@@ -1,4 +1,4 @@
-package geneticAlgorithm.Byte;
+package geneticAlgorithm.genomes;
 
 import geneticAlgorithm.AbstractGenome;
 import geneticAlgorithm.Genome;

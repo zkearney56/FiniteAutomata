@@ -1,8 +1,7 @@
-package geneticAlgorithm.Tower;
+package geneticAlgorithm.Algorithm;
 
 import java.util.Arrays;
 
-import geneticAlgorithm.Algorithm.Fitness;
 import list.Stack;
 
 public class TowerOfHanoi{
@@ -14,11 +13,13 @@ public class TowerOfHanoi{
 	private int numDisks = 0;
 	private int geneSize = 0;
 	private int numMoves = 0;
+	private int illegalMoves = 0;
 	private String returnString = "";
 	private byte[] newGene;
 	int x = 0;
 	public static int initialGeneSize = 256;
 	int prevMov = -1;
+
 	
 	public TowerOfHanoi(int numDisks){
 		this.numDisks = numDisks;
@@ -28,9 +29,8 @@ public class TowerOfHanoi{
 		for(int i = numDisks; i > 0; i--){
 			tower1.push(i);
 		}
-		
 	}
-	
+
 	public String toString(){
 		returnString += "MIN NUM MOVES: " + minNumMoves(numDisks) +"\n";
 		returnString += "CURR NUM MOVES: " + newGene.length +"\n";
@@ -57,6 +57,9 @@ public class TowerOfHanoi{
 				x++;
 				numMoves++;
 			}
+			else{
+				illegalMoves++;
+			}
 			numGene = i;			
 			if(testComplete()){	
 				return calcFitness();
@@ -67,7 +70,10 @@ public class TowerOfHanoi{
 	
 	public Fitness calcFitness(){
 		boolean adjust = false;
-		double returnVal = Math.pow(2, tower3.count());
+		double returnVal = Math.pow(2, tower3.count()) * (Algorithm.TOWER_FITNESS/(illegalMoves + 1));
+		returnVal = returnVal / Algorithm.TOWER_FITNESS;
+		//System.out.println(returnVal);
+		//System.out.println(illegalMoves);
 		if(numGene < geneSize && testComplete()){
 			adjust = true;	//f(x) = h / (x-a)^2 +1
 			returnVal =  (Math.pow(returnVal, 2)/(Math.sqrt(Math.pow((numMoves - minNumMoves(numDisks)), 2))+1)) + Math.pow(returnVal, 2);

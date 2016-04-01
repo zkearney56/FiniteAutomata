@@ -17,10 +17,47 @@ import java.util.Random;
 
 import geneticAlgorithm.Genome;
 import geneticAlgorithm.Population;
+import geneticAlgorithm.genomes.ByteGenome;
+import geneticAlgorithm.genomes.GeneGenome;
+import geneticAlgorithm.genomes.LetterGenome;
+import geneticAlgorithm.genomes.TowerGenome;
 import list.ArrayList;
 
 public class GeneticFunc {
 
+	/**
+	 * Generates a genome of the proper type for a specific algorithm.
+	 * @param geneLength
+	 * @param alg
+	 * @return
+	 */
+	public static Genome generateGenome(int geneLength, AlgorithmEnum alg){
+		switch(alg){
+		case BYTE_ALG1:
+			return new ByteGenome(geneLength, alg);
+		case BYTE_ALG2:
+			return new ByteGenome(geneLength, alg);
+		case BYTE_ALG3:
+			return new ByteGenome(geneLength, alg);
+		case BYTE_ALG4:
+			return new ByteGenome(geneLength, alg);
+		case BYTE_ALG5:
+			return new ByteGenome(geneLength, alg);
+		case BYTE_ALG6:
+			return new ByteGenome(geneLength, alg);
+		case BYTE_ALG7:
+			return new ByteGenome(geneLength, alg);
+		case GENE_ALG1:
+			return new GeneGenome(geneLength, alg);
+		case LET_ALG1:
+			return new LetterGenome(geneLength, alg);
+		case TOWER_ALG1:
+			return new TowerGenome(geneLength, alg);
+		default:
+			return null;
+		}
+	}
+	
 	/**
 	 * Mutates population. If mutcount < 1, Does not mutate anything. 
 	 * Else, mutates a random byte based on mutcoef and decrements mutcount until mutcount is less than 1.
@@ -30,8 +67,14 @@ public class GeneticFunc {
 		pop.incMutCount();
 		int x = 1;
 		while(x <= pop.getMutCount()){
-			mutateLoop(pop);
-			if(mutateLoop(pop)){
+			for(int i = pop.getEliteCount(); i < pop.size(); i++){
+				Genome mutChrom = pop.getGenome(i);
+				for(int y = 0; y < mutChrom.getSize(); y++){
+					if(Math.random() < pop.getMutCoef()){
+						mutChrom.mutate(y);
+						pop.decMutCount();
+					}
+				}
 			}
 		}
 		}
@@ -67,13 +110,19 @@ public class GeneticFunc {
 			prob = rand.nextInt((int)elite.getFitness());	
 		}
 		
-		int probIndex = 0;
+		double probIndex = 0;
 		while(true){
 			int randIndex = rand.nextInt(pop.size());
 			probIndex += pop.getGenome(randIndex).getFitness();
 			if(probIndex >= prob){
 				return pop.getGenome(randIndex);
 			}
+		}
+	}
+	
+	public static void calcFitness(Population pop){
+		for(int i = 0; i < pop.size(); i++){
+			pop.getGenome(i).testFitness();
 		}
 	}
 	/**
@@ -85,11 +134,42 @@ public class GeneticFunc {
 		ArrayList<Genome> elite = pop.getAllElite();
 		for(int i = 0; i < pop.size(); i++){
 			if(pop.getGenome(i).getFitness() > elite.get(elite.size() - 1).getFitness()){
-				pop.setElite(pop.getGenome(i));
+				setElite(pop, pop.getGenome(i));
 			}
 		
 		}
 	}
+	
+	/**
+	 * Attempts to set a genome as elite, and sorts the elite list by descending order of fitness.
+	 * @param pop
+	 * @param newElite
+	 */
+	public static void setElite(Population pop, Genome newElite){
+		ArrayList<Genome> elite = pop.getAllElite();
+		int eliteCount = pop.getEliteCount();
+		for(int i = 0; i < elite.size(); i++){
+			if(GeneticFunc.compareGenomes(newElite, elite.get(i))) return;
+		}
+		double fit = newElite.getFitness();
+		boolean added = false;
+		for(int i = 0; i < elite.size(); i++){
+			if(elite.get(i).getFitness() < fit){
+				elite.add(i, newElite);
+				newElite.setElite(true);
+				added = true;
+				break;
+			}
+		}
+		if(elite.size() < eliteCount && !added){
+			elite.add(newElite);
+			newElite.setElite(true);
+		}
+		while(elite.size() > eliteCount){
+			elite.remove(elite.size() - 1);
+			}
+		pop.setCurrentMaxFit(elite.get(0).getFitness());
+		}
 	
 	/**
 	 * Performs crossover mating on a population.
@@ -215,6 +295,10 @@ public class GeneticFunc {
 		return clone;		
 	}
 	
+	/**
+	 * If an adjust flag is tripped, trims all genomes to length of the strongest genome with a flipped adjust flag.
+	 * @param pop
+	 */
 	public static void adjustGenomeLength(Population pop){
 		boolean adjust = false;
 		int newSize = pop.getGeneLength();
@@ -238,7 +322,43 @@ public class GeneticFunc {
 
 	}
 	
+	/**
+	 * Compares two genomes. Returns true if equal.
+	 * @param gen1
+	 * @param gen2
+	 * @return
+	 */
 	public static boolean compareGenomes(Genome gen1, Genome gen2){
 		return Arrays.equals(gen1.getGenome(),gen2.getGenome());
+	}
+	
+	/**
+	 * Fills an initial population with genomes.
+	 * @param pop
+	 */
+	public static void fillPopulation(Population pop){
+		for(int i = 0; i < pop.size(); i++){
+			pop.addGenome(GeneticFunc.generateGenome(pop.getGeneLength(), pop.getAlg()));
+		}
+		GeneticFunc.calcFitness(pop);
+		double currMaxFit = 0;
+		int index = 0;
+		for(int x = 0; x < pop.getEliteCount(); x++){
+		for(int i = 0; i < pop.size(); i++){
+			if(currMaxFit < pop.getGenome(i).getFitness()){
+				currMaxFit = pop.getGenome(i).getFitness();
+				index = i;
+			}
+		}
+		Genome newElite = pop.removeGenome(index);
+		newElite.setElite(true);
+		pop.addElite(newElite);
+		}
+		ArrayList<Genome>elite = pop.getAllElite();
+		for(int i = elite.size() - 1; i >= 0; i--){
+			pop.addGenome(elite.get(i), 0);
+		}
+		pop.setCurrentMaxFit(elite.get(0).getFitness());
+		GeneticFunc.findElite(pop);
 	}
 }

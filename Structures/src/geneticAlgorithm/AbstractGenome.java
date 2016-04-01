@@ -37,7 +37,6 @@ public abstract class AbstractGenome implements Genome{
 		genome = new byte[size];
 		mates = new ArrayList<Genome>();
 		randomize();
-		testFitness();
 	}
 	
 	public AbstractGenome(Genome x){
@@ -66,7 +65,6 @@ public abstract class AbstractGenome implements Genome{
 	
 	public final void mutate(int index){
 		genome[index] = mutateByte(genome[index]);
-		testFitness();
 	}
 	
 	public final void testFitness(){

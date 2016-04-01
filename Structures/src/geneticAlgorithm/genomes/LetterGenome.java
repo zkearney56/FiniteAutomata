@@ -1,4 +1,4 @@
-package geneticAlgorithm.Letter;
+package geneticAlgorithm.genomes;
 
 import java.util.Random;
 
