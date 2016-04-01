@@ -4,19 +4,19 @@ public class Fitness {
 
 	public byte[] newByte = {};
 	public boolean adjustSize = false;
-	public int fitness = 0;
+	public double fitness = 0;
 	
-	public Fitness(int fit, boolean adjust, byte[] newByte){
+	public Fitness(double fit, boolean adjust, byte[] newByte){
 		this.fitness = fit;
 		this.adjustSize = adjust;
 		this.newByte = newByte;
 	}
 	
-	public Fitness(int fit){
+	public Fitness(double fit){
 		this.fitness = fit;
 	}
 	
-	public int getFitness(){
+	public double getFitness(){
 		return fitness;
 	}
 	

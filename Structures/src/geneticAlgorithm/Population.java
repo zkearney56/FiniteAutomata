@@ -13,6 +13,7 @@ package geneticAlgorithm;
 
 import geneticAlgorithm.Algorithm.AlgorithmEnum;
 import geneticAlgorithm.Algorithm.CrossoverEnum;
+import list.ArrayList;
 
 public interface Population {
 
@@ -21,12 +22,6 @@ public interface Population {
 	 * @param maxGen
 	 */
 	void setMaxGen(int maxGen);
-
-	/**
-	 * Sets the maximum number of generations while at the same max fitness.
-	 * @param maxFit
-	 */
-	void setMaxFit(int maxFit);
 
 	/**
 	 * Sets the mutation coefficient.
@@ -45,12 +40,6 @@ public interface Population {
 	 * @return
 	 */
 	int getMaxGen();
-
-	/**
-	 * Returns the maximum number of generations while at the same max fitness.
-	 * @return
-	 */
-	int getMaxFit();
 
 	/**
 	 * Returns number of mutations for the current generation.
@@ -118,6 +107,10 @@ public interface Population {
 	Genome getElite();
 	
 	/**
+	 * Returns all elite genomes.
+	 */
+	public ArrayList<Genome> getAllElite();
+	/**
 	 * Returns a new Genome with specified geneLength and algorithm.
 	 * @param geneLength
 	 * @param alg
@@ -137,4 +130,15 @@ public interface Population {
 	 */
 	public int getGeneLength();
 
+	/**
+	 * Sets the number of distinct elite genomes for every generation.
+	 * Must be larger than 1.
+	 */
+	public void setEliteCount(int num);
+	
+	/**
+	 * Returns number of distinct elite genomes for every generation.
+	 * @return
+	 */
+	public int getEliteCount();
 }

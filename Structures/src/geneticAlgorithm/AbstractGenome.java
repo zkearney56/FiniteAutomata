@@ -27,7 +27,7 @@ public abstract class AbstractGenome implements Genome{
 	protected byte[] genome;
 	private ArrayList<Genome> mates;
 	private Fitness fitnessobj;
-	private int fitness = 0;
+	private double fitness = 0;
 	private boolean isElite = false;
 	
 	public AbstractGenome(int size, AlgorithmEnum alg){
@@ -56,7 +56,7 @@ public abstract class AbstractGenome implements Genome{
 	
 	public abstract byte randomByte();
 	
-	public final int getFitness(){
+	public final double getFitness(){
 		return fitness;
 	}
 	

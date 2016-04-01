@@ -19,7 +19,7 @@ public interface Genome extends Cloneable{
 	 * Returns fitness of genome.
 	 * @return
 	 */
-	public int getFitness();
+	public double getFitness();
 	/**
 	 * Returns size of genome.
 	 * @return

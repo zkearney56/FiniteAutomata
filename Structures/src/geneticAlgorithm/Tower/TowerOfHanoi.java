@@ -5,7 +5,7 @@ import java.util.Arrays;
 import geneticAlgorithm.Algorithm.Fitness;
 import list.Stack;
 
-public class TowerOfHanoi {
+public class TowerOfHanoi{
 	
 	private Stack<Integer> tower1;
 	private Stack<Integer> tower2;
@@ -67,10 +67,10 @@ public class TowerOfHanoi {
 	
 	public Fitness calcFitness(){
 		boolean adjust = false;
-		int returnVal = tower3.count();
+		double returnVal = Math.pow(2, tower3.count());
 		if(numGene < geneSize && testComplete()){
-			adjust = true;	
-			returnVal = (int) (10000/numMoves * Math.pow(numDisks, 2));
+			adjust = true;	//f(x) = h / (x-a)^2 +1
+			returnVal =  (Math.pow(returnVal, 2)/(Math.sqrt(Math.pow((numMoves - minNumMoves(numDisks)), 2))+1)) + Math.pow(returnVal, 2);
 		}
 		newGene = Arrays.copyOf(newGene, x);		
 		return new Fitness(returnVal, adjust, newGene);

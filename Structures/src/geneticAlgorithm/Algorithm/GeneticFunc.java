@@ -1,5 +1,7 @@
 package geneticAlgorithm.Algorithm;
 
+import java.util.Arrays;
+
 /*
  * Written by: Zachary Kearney
  * Copyright by: Zachary Kearney, 2016
@@ -15,6 +17,7 @@ import java.util.Random;
 
 import geneticAlgorithm.Genome;
 import geneticAlgorithm.Population;
+import list.ArrayList;
 
 public class GeneticFunc {
 
@@ -60,8 +63,8 @@ public class GeneticFunc {
 		Random rand = new Random();
 		int prob = 1;
 		Genome elite = pop.getElite();
-		if(elite.getFitness() > 0){
-			prob = rand.nextInt(elite.getFitness());	
+		if(elite.getFitness() >= 1){
+			prob = rand.nextInt((int)elite.getFitness());	
 		}
 		
 		int probIndex = 0;
@@ -78,24 +81,25 @@ public class GeneticFunc {
 	 * @param pop
 	 * @return
 	 */
-	public static Genome findElite(Population pop){
-		Genome currElite = pop.getElite();
+	public static void findElite(Population pop){
+		ArrayList<Genome> elite = pop.getAllElite();
 		for(int i = 0; i < pop.size(); i++){
-			if(pop.getGenome(i).getFitness() > currElite.getFitness()){
-				currElite.setElite(false);
+			if(pop.getGenome(i).getFitness() > elite.get(elite.size() - 1).getFitness()){
 				pop.setElite(pop.getGenome(i));
 			}
 		
 		}
-		return currElite;
 	}
+	
 	/**
 	 * Performs crossover mating on a population.
 	 * @param pop
 	 */
 	public static void crossover(Population pop){
-		pop.setGenome(pop.getElite(), 0);
-		for(int i = 1; i < pop.size(); i++){
+		for(int i = 0; i < pop.getEliteCount(); i++){
+			pop.setGenome(pop.getAllElite().get(i), i);
+		}
+		for(int i = pop.getEliteCount(); i < pop.size(); i++){
 			boolean hasMated = false;
 			while(!hasMated){
 				Genome xx = chooseRandom(pop);
@@ -147,8 +151,8 @@ public class GeneticFunc {
 		case SPLIT_FIT_RATIO:{
 			Random rand = new Random();
 			int split = rand.nextInt(2) + 1;
-			int fit1 = clone.getFitness();
-			int fit2 = yy.getFitness();
+			double fit1 = clone.getFitness();
+			double fit2 = yy.getFitness();
 			switch(split){
 			case 1:{
 				int splitNum =(int)((fit1 / (fit1 + fit2)) * size);
@@ -214,7 +218,7 @@ public class GeneticFunc {
 	public static void adjustGenomeLength(Population pop){
 		boolean adjust = false;
 		int newSize = pop.getGeneLength();
-		int maxFit = 0;
+		double maxFit = 0;
 		for(int i = 0; i < pop.size(); i++){
 			Genome currGene = pop.getGenome(i);
 			if(currGene.adjustFlag()){
@@ -232,5 +236,9 @@ public class GeneticFunc {
 			}
 		}
 
+	}
+	
+	public static boolean compareGenomes(Genome gen1, Genome gen2){
+		return Arrays.equals(gen1.getGenome(),gen2.getGenome());
 	}
 }
