@@ -71,14 +71,14 @@ public class GeneticFunc {
 	public static void mutate(Population pop) {
 		pop.incMutCount();
 		int x = 1;
+		Random rand = new Random();
 		while (x <= pop.getMutCount()) {
-			for (int i = pop.getEliteCount(); i < pop.size(); i++) {
-				Genome mutChrom = pop.getGenome(i);
-				for (int y = 0; y < mutChrom.getSize(); y++) {
-					if (Math.random() < pop.getMutCoef()) {
-						mutChrom.mutate(y);
-						pop.decMutCount();
-					}
+			int index = rand.nextInt(pop.size() - pop.getEliteCount()) + pop.getEliteCount();
+			Genome mutChrom = pop.getGenome(index);
+			for (int y = 0; y < mutChrom.getSize(); y++) {
+				if (Math.random() < pop.getMutCoef()) {
+					mutChrom.mutate(y);
+					pop.decMutCount();
 				}
 			}
 		}

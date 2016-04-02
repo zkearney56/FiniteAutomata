@@ -21,9 +21,9 @@ public class Test {
 
 		for (int i = 0; i < numIterations; i++) {
 
-			Population testPop = new GeneticPopulation(5, alg, cross);
+			Population testPop = new GeneticPopulation(20, alg, cross);
 			testPop.setMutCoef(.015);
-			testPop.setMaxGen(100000);
+			testPop.setMaxGen(1000);
 			testPop.setEliteCount(2);
 			testPop.execute();
 			System.out.println("FINISHED TEST: " + i);
