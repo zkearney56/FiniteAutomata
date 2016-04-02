@@ -8,12 +8,12 @@ public class Test {
 
 	public static void main(String args[]) {
 
-		AlgorithmEnum alg = AlgorithmEnum.GENE_ALG1;
+		AlgorithmEnum alg = AlgorithmEnum.TOWER_ALG1;
 		CrossoverEnum cross = CrossoverEnum.SPLIT_4;
-		Algorithm.setTowerCount(4);
+		Algorithm.setTowerCount(6);
 		long numGens = 0;
 		double avgFit = 0;
-		int numIterations = 10;
+		int numIterations = 2;
 		int lowestGen = 0;
 		double maxFit = 0;
 		double avgRunTime = 0;
@@ -21,9 +21,9 @@ public class Test {
 
 		for (int i = 0; i < numIterations; i++) {
 
-			Population testPop = new GeneticPopulation(20, alg, cross);
+			Population testPop = new GeneticPopulation(5, alg, cross);
 			testPop.setMutCoef(.015);
-			testPop.setMaxGen(1000);
+			testPop.setMaxGen(1000000);
 			testPop.setEliteCount(2);
 			testPop.execute();
 			System.out.println("FINISHED TEST: " + i);

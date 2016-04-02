@@ -280,6 +280,149 @@ public class GeneticFunc {
 			}
 			break;
 		}
+		case GENE: 
+			byte[] x = clone.getGenome();
+			for (int i = 0; i < size; i++) {	
+				if(!(x[i] == y[i])){
+				byte ybyte = y[i];
+				double rand = Math.random();
+				switch(x[i]){
+				case 0:
+					if(ybyte == 01){
+						if(rand < .25){
+							xx.setGene(i, (byte) 01);
+						}
+						else{
+							xx.setGene(i, (byte) 00);
+						}
+					}
+					else if(ybyte == 10){
+						if(rand < .25){
+							xx.setGene(i, (byte)10);
+						}
+						else{
+							xx.setGene(i, (byte)00);
+						}
+						
+					}
+					else if(ybyte == 11){
+						if(rand < .25){
+							xx.setGene(i, (byte)11);
+						}
+						else if(rand <.5){
+							xx.setGene(i, (byte) 10);
+						}
+						else if(rand < .75)
+						{
+							xx.setGene(i, (byte) 01);
+						}
+						else{
+							xx.setGene(i, (byte)00);
+						}		
+					}
+				break;
+				case 01:
+					if(ybyte == 00){
+						if(rand < .25){
+							xx.setGene(i, (byte) 01);
+						}
+						else{
+							xx.setGene(i, (byte) 00);
+						}
+					}
+					else if(ybyte == 10){
+						if(rand < .25){
+							xx.setGene(i, (byte)11);
+						}
+						else if(rand <.5){
+							xx.setGene(i,(byte)01);
+						}
+						else if(rand < .75){
+							xx.setGene(i,(byte)10);
+						}
+						else{
+							xx.setGene(i, (byte)11);
+						}
+						
+					}
+					else if(ybyte == 11){
+						if(rand < .25){
+							xx.setGene(i, (byte)01);
+						}
+						else{
+							xx.setGene(i, (byte) 11);
+						}
+					}
+				break;
+				case 10:
+					if(ybyte == 01){
+						if(rand < .25){
+							xx.setGene(i, (byte)00);
+						}
+						else if(rand < .5){
+							xx.setGene(i, (byte)01);
+						}
+						else if (rand < .75){
+							xx.setGene(i, (byte)10);
+						}
+						else{
+							xx.setGene(i, (byte) 11);
+						}
+					}
+					else if(ybyte == 00){
+						if(rand < .25){
+							xx.setGene(i, (byte)10);
+						}
+						else{
+							xx.setGene(i, (byte)00);
+						}
+					}
+					else if(ybyte == 11){
+						if(rand < .25){
+							xx.setGene(i, (byte) 10);
+						}
+						else{
+							xx.setGene(i, (byte) 11);
+						}
+					}
+				break;
+				case 11:
+					if(ybyte == 01){
+						if(rand < .25){
+							xx.setGene(i, (byte)01);
+						}
+						else{
+							xx.setGene(i, (byte) 11);
+						}
+					}
+					else if(ybyte == 10){
+						if(rand < .25){
+							xx.setGene(i, (byte) 10);
+						}
+						else{
+							xx.setGene(i, (byte) 11);
+						}
+					}
+					else if(ybyte == 00){
+						if(rand < .25){
+							xx.setGene(i, (byte)11);
+						}
+						else if(rand <.5){
+							xx.setGene(i, (byte) 10);
+						}
+						else if(rand < .75)
+						{
+							xx.setGene(i, (byte) 01);
+						}
+						else{
+							xx.setGene(i, (byte)00);
+						}	
+					}
+				break;
+				}
+			}
+			break;
+			}
 		default:
 			break;
 		}
