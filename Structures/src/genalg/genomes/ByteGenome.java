@@ -1,8 +1,8 @@
-package geneticAlgorithm.genomes;
+package genalg.genomes;
 
-import geneticAlgorithm.AbstractGenome;
-import geneticAlgorithm.Genome;
-import geneticAlgorithm.Algorithm.AlgorithmEnum;
+import genalg.AbstractGenome;
+import genalg.Genome;
+import genalg.algorithm.AlgorithmEnum;
 
 public class ByteGenome extends AbstractGenome implements Genome{
 	

@@ -1,30 +1,30 @@
-package geneticAlgorithm.Algorithm;
+package genalg.algorithm;
 
 public class Fitness {
 
 	public byte[] newByte = {};
 	public boolean adjustSize = false;
 	public double fitness = 0;
-	
-	public Fitness(double fit, boolean adjust, byte[] newByte){
+
+	public Fitness(double fit, boolean adjust, byte[] newByte) {
 		this.fitness = fit;
 		this.adjustSize = adjust;
 		this.newByte = newByte;
 	}
-	
-	public Fitness(double fit){
+
+	public Fitness(double fit) {
 		this.fitness = fit;
 	}
-	
-	public double getFitness(){
+
+	public double getFitness() {
 		return fitness;
 	}
-	
-	public boolean adjustSize(){
+
+	public boolean adjustSize() {
 		return adjustSize;
 	}
-	
-	public byte[] newByte(){
+
+	public byte[] newByte() {
 		return newByte;
 	}
 }

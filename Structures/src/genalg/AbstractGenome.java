@@ -1,4 +1,4 @@
-package geneticAlgorithm;
+package genalg;
 
 /*
  * Written by: Zachary Kearney
@@ -11,16 +11,14 @@ package geneticAlgorithm;
  * 
  */
 
-
 import java.util.Arrays;
-import java.util.Random;
 
-import geneticAlgorithm.Algorithm.Algorithm;
-import geneticAlgorithm.Algorithm.AlgorithmEnum;
-import geneticAlgorithm.Algorithm.Fitness;
+import genalg.algorithm.Algorithm;
+import genalg.algorithm.AlgorithmEnum;
+import genalg.algorithm.Fitness;
 import list.ArrayList;
 
-public abstract class AbstractGenome implements Genome{
+public abstract class AbstractGenome implements Genome {
 
 	protected int size = 0;
 	private AlgorithmEnum alg = AlgorithmEnum.BYTE_ALG1;
@@ -29,17 +27,17 @@ public abstract class AbstractGenome implements Genome{
 	private Fitness fitnessobj;
 	private double fitness = 0;
 	private boolean isElite = false;
-	
-	public AbstractGenome(int size, AlgorithmEnum alg){
+
+	public AbstractGenome(int size, AlgorithmEnum alg) {
 		this.size = size;
 		this.alg = alg;
-		fitnessobj = new Fitness(0,false, new byte[] {});
+		fitnessobj = new Fitness(0, false, new byte[] {});
 		genome = new byte[size];
 		mates = new ArrayList<Genome>();
 		randomize();
 	}
-	
-	public AbstractGenome(Genome x){
+
+	public AbstractGenome(Genome x) {
 		this.size = x.getSize();
 		this.alg = x.getAlg();
 		this.fitness = x.getFitness();
@@ -48,85 +46,105 @@ public abstract class AbstractGenome implements Genome{
 		this.genome = Arrays.copyOf(x.getGenome(), size);
 		mates = new ArrayList<Genome>();
 	}
-	
+
+	@Override
 	public abstract Genome clone();
-	
+
+	@Override
 	public abstract byte mutateByte(byte b);
-	
+
+	@Override
 	public abstract byte randomByte();
-	
-	public final double getFitness(){
+
+	@Override
+	public final double getFitness() {
 		return fitness;
 	}
-	
-	public final int getSize(){
+
+	@Override
+	public final int getSize() {
 		return size;
 	}
-	
-	public final void mutate(int index){
+
+	@Override
+	public final void mutate(int index) {
 		genome[index] = mutateByte(genome[index]);
 	}
-	
-	public final void testFitness(){
+
+	@Override
+	public final void testFitness() {
 		fitnessobj = Algorithm.calcFitness(genome, alg);
 		fitness = fitnessobj.getFitness();
 	}
-	
+
+	@Override
 	public final AlgorithmEnum getAlg() {
 		return alg;
 	}
-	
-	public final String toString(){
+
+	@Override
+	public final String toString() {
 		return Algorithm.toString(genome, alg);
 	}
-	
-	public final byte[] getGenome(){
+
+	@Override
+	public final byte[] getGenome() {
 		return genome;
 	}
-	
-	public final byte getGene(int index){
+
+	@Override
+	public final byte getGene(int index) {
 		return genome[index];
 	}
-	
-	public final void setElite(boolean bool){
+
+	@Override
+	public final void setElite(boolean bool) {
 		isElite = bool;
 	}
-	
-	public final boolean isElite(){
+
+	@Override
+	public final boolean isElite() {
 		return isElite;
 	}
-	
+
+	@Override
 	public void randomize() {
-		for(int i = 0; i < size; i++){
+		for (int i = 0; i < size; i++) {
 			genome[i] = randomByte();
 		}
 	}
-	
-	public final void setGene(int index, byte dat){
+
+	@Override
+	public final void setGene(int index, byte dat) {
 		genome[index] = dat;
 	}
-	
-	public final void addMate(Genome mate){
+
+	@Override
+	public final void addMate(Genome mate) {
 		mates.add(mate);
 	}
-	
-	public final boolean hasMated(Genome mate){
+
+	@Override
+	public final boolean hasMated(Genome mate) {
 		return mates.contains(mate);
 	}
 
-	public final void adjustSize(int size){
+	@Override
+	public final void adjustSize(int size) {
 		this.size = size;
-		genome = Arrays.copyOf(fitnessobj.newByte(), size);	
-		for(int i = fitnessobj.newByte().length; i < size; i++){
+		genome = Arrays.copyOf(fitnessobj.newByte(), size);
+		for (int i = fitnessobj.newByte().length; i < size; i++) {
 			genome[i] = randomByte();
 		}
 	}
-	
-	public final boolean adjustFlag(){
+
+	@Override
+	public final boolean adjustFlag() {
 		return fitnessobj.adjustSize();
 	}
-	
-	public final int adjustSize(){
+
+	@Override
+	public final int adjustSize() {
 		return fitnessobj.newByte.length;
 	}
 }

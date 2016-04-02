@@ -1,4 +1,4 @@
-package geneticAlgorithm.Algorithm;
+package genalg.algorithm;
 
 /*
  * Written by: Zachary Kearney

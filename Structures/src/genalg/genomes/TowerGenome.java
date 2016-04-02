@@ -1,10 +1,10 @@
-package geneticAlgorithm.genomes;
+package genalg.genomes;
 
 import java.util.Random;
 
-import geneticAlgorithm.AbstractGenome;
-import geneticAlgorithm.Genome;
-import geneticAlgorithm.Algorithm.AlgorithmEnum;
+import genalg.AbstractGenome;
+import genalg.Genome;
+import genalg.algorithm.AlgorithmEnum;
 
 public class TowerGenome extends AbstractGenome implements Genome{
 
