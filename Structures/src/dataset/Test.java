@@ -28,6 +28,7 @@ public class Test {
 		file = getFile();
 		
 		if(file == null){
+			sc.close();
 			return;
 		}
 		
