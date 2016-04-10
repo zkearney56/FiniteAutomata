@@ -177,6 +177,10 @@ public class ArrayList<E> implements List<E>, Iterable<E>{
 		}
 	}
 	
+	public String toString(){
+		return elementData.toString();
+	}
+	
 	private class ArrayListIterator implements Iterator<E> {
 		private int index = 0;
 

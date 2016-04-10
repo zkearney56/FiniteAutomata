@@ -42,6 +42,10 @@ public class DataSet {
 		return classification;
 	}
 	
+	public int getNumRows(){
+		return dataRows.size();
+	}
+	
 	public void readFile(File file) {
 		System.out.println(file.getAbsolutePath());
 		try {
