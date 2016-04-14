@@ -1,4 +1,4 @@
-package list;
+package stack;
 
 public class StackTest {
 
